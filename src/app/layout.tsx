@@ -1,27 +1,35 @@
-import './globals.css'
-import type { Metadata } from 'next'
-import { Noto_Sans_KR } from 'next/font/google'
+import './globals.css';
+import type { Metadata } from 'next';
+import { Noto_Sans_KR } from 'next/font/google';
+import Header from '@/app/components/Header';
+import Navigator from '@/app/components/Navigator';
+import Footer from '@/app/components/Footer';
 
 const noto_sans_KR = Noto_Sans_KR({
-  weight: ['400', '700'],
-  subsets: ['latin'],
-  display: 'swap',
+    weight: ['400', '700'],
+    subsets: ['latin'],
+    display: 'swap',
 });
 
 export const metadata: Metadata = {
-  title: 'AI covid 19 Tester',
-  description: 'AI covid 19 Tester',
+    title: 'AI covid 19 Tester',
+    description: 'AI covid 19 Tester',
 }
 
 
 export default function RootLayout({
-  children,
+    children,
 }: {
-  children: React.ReactNode
+    children: React.ReactNode
 }) {
-  return (
-    <html lang="ko">
-      <body className={noto_sans_KR.className}>{children}</body>
-    </html>
-  )
+    return (
+        <html lang="ko">
+            <body className={noto_sans_KR.className}>
+                <Header />
+                <Navigator />
+                {children}
+                <Footer />
+            </body>
+        </html>
+    )
 }
