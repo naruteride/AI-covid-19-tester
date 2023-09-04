@@ -26,18 +26,20 @@ const app = initializeApp(firebaseConfig);
 // getEmail(db);
 
 const provider = new GoogleAuthProvider();
-const auth = getAuth();
-
+provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
+const auth = getAuth(app);
 signInWithPopup(auth, provider)
     .then((result) => {
-        console.log("asdf1");
         // This gives you a Google Access Token. You can use it to access the Google API.
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const token = credential?.accessToken;
         // The signed-in user info.
         const user = result.user;
         // IdP data available using getAdditionalUserInfo(result)
-        // ...
+        console.log("========================");
+        console.log(`credential: ${credential}`);
+        console.log(`token: ${token}`);
+        console.log(`user: ${user}`);
     }).catch((error) => {
         // Handle Errors here.
         const errorCode = error.code;
@@ -46,9 +48,10 @@ signInWithPopup(auth, provider)
         const email = error.customData.email;
         // The AuthCredential type that was used.
         const credential = GoogleAuthProvider.credentialFromError(error);
-        // ...
-        console.log("******************************")
-        console.log(`errorCode: ${errorCode}`)
-        console.log(`errorMessage: ${errorMessage}`)
-        console.log(`email: ${email}`)
+        
+        console.log("*************************")
+        console.log(`errorCode: ${errorCode}`);
+        console.log(`errorMessage: ${errorMessage}`);
+        console.log(`email: ${email}`);
+        console.log(`credential: ${credential}`);
     });
