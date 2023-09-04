@@ -38,6 +38,31 @@ body {
         -50px -50px,
         -1px -1px,
         -1px -1px;
+    display: grid;
+    grid-template: 4rem 1fr / 20rem 1fr;
+    grid-template-areas:
+        "navigator main"
+        "navigator main";
+}
+
+header {
+    grid-area: header;
+    display: none;
+}
+
+nav {
+    grid-area: navigator;
+    color: #fff;
+    background: #373737;
+    padding: 3rem;
+}
+
+main {
+    grid-area: main;
+}
+
+footer {
+    grid-area: footer;
 }
 
 a {
