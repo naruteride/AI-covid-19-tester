@@ -1,6 +1,6 @@
 import { Firestore } from "@firebase/firestore/lite";
 import { initializeApp } from "firebase/app";
-import { getAuth, signInWithPopup, GoogleAuthProvider, GithubAuthProvider } from "firebase/auth";
+import { getAuth, signInWithPopup, GoogleAuthProvider, GithubAuthProvider, createUserWithEmailAndPassword } from "firebase/auth";
 import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
 
 const firebaseConfig = {
@@ -30,7 +30,6 @@ const app = initializeApp(firebaseConfig);
 
 // 구글 팝업 로그인 테스트: 안 됨
 // const provider = new GoogleAuthProvider();
-// provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
 // const auth = getAuth(app);
 // signInWithPopup(auth, provider)
 //     .then((result) => {
@@ -40,7 +39,8 @@ const app = initializeApp(firebaseConfig);
 //         // The signed-in user info.
 //         const user = result.user;
 //         // IdP data available using getAdditionalUserInfo(result)
-//         console.log("=========================");
+
+//         console.log("SUCCESS! =========================");
 //         console.log(`credential: ${credential}`);
 //         console.log(`token: ${token}`);
 //         console.log(`user: ${user}`);
@@ -53,7 +53,7 @@ const app = initializeApp(firebaseConfig);
 //         // The AuthCredential type that was used.
 //         const credential = GoogleAuthProvider.credentialFromError(error);
 
-//         console.log("*************************");
+//         console.log("ERROR! *************************");
 //         console.log(`errorCode: ${errorCode}`);
 //         console.log(`errorMessage: ${errorMessage}`);
 //         console.log(`email: ${email}`);
@@ -62,32 +62,54 @@ const app = initializeApp(firebaseConfig);
 
 
 // 깃허브 팝업 로그인: 안 됨
-const provider = new GithubAuthProvider();
-const auth = getAuth();
-signInWithPopup(auth, provider)
-    .then((result) => {
-        // This gives you a GitHub Access Token. You can use it to access the GitHub API.
-        const credential = GithubAuthProvider.credentialFromResult(result);
-        const token = credential?.accessToken;
+// const provider = new GithubAuthProvider();
+// const auth = getAuth(app);
+// signInWithPopup(auth, provider)
+//     .then((result) => {
+//         // This gives you a GitHub Access Token. You can use it to access the GitHub API.
+//         const credential = GithubAuthProvider.credentialFromResult(result);
+//         const token = credential?.accessToken;
 
-        // The signed-in user info.
-        const user = result.user;
-        // IdP data available using getAdditionalUserInfo(result)
-        console.log("=========================");
-        console.log(`credential: ${credential}`);
-        console.log(`token: ${token}`);
-        console.log(`user: ${user}`);
-    }).catch((error) => {
-        // Handle Errors here.
+//         // The signed-in user info.
+//         const user = result.user;
+//         // IdP data available using getAdditionalUserInfo(result)
+//         console.log("SUCCESS! =========================");
+//         console.log(`credential: ${credential}`);
+//         console.log(`token: ${token}`);
+//         console.log(`user: ${user}`);
+//     }).catch((error) => {
+//         // Handle Errors here.
+//         const errorCode = error.code;
+//         const errorMessage = error.message;
+//         // The email of the user's account used.
+//         const email = error.customData.email;
+//         // The AuthCredential type that was used.
+//         const credential = GithubAuthProvider.credentialFromError(error);
+//         console.log("ERROR! *************************");
+//         console.log(`errorCode: ${errorCode}`);
+//         console.log(`errorMessage: ${errorMessage}`);
+//         console.log(`email: ${email}`);
+//         console.log(`credential: ${credential}`);
+//     });
+
+
+// 이메일 로그인: 됨
+const auth = getAuth(app);
+const email = "slimejam01@gmail.com";
+const password = "ssss1llll2iiii3";
+createUserWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+        // Signed in 
+        const user = userCredential.user;
+
+        console.log("SUCCESS! =========================");
+        console.log(`user: ${user}`)
+    })
+    .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        // The email of the user's account used.
-        const email = error.customData.email;
-        // The AuthCredential type that was used.
-        const credential = GithubAuthProvider.credentialFromError(error);
-        console.log("*************************");
-        console.log(`errorCode: ${errorCode}`);
-        console.log(`errorMessage: ${errorMessage}`);
-        console.log(`email: ${email}`);
-        console.log(`credential: ${credential}`);
+
+        console.log("ERROR! *************************");
+        console.log(`errorCode: ${errorCode}`)
+        console.log(`errorMessage: ${errorMessage}`)
     });
