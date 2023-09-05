@@ -1,4 +1,3 @@
-"use client"
 // import '@/app/components/Firebase';
 import './globals.css';
 import type { Metadata } from 'next';
@@ -103,7 +102,7 @@ const app = initializeApp(firebaseConfig);
 //     });
 
 
-// 이메일 로그인:
+// 이메일 로그인: 됨
 const auth = getAuth(app);
 const email = "slimejam01@gmail.com";
 const password = "ssss1llll2iiii3";
