@@ -4,7 +4,8 @@ import {
     signInWithEmailAndPassword
 } from "firebase/auth";
 import { useRef } from "react";
-import app from '@/app/components/Firebase'
+import app from '@/app/components/Firebase';
+// import { redirect, useRouter } from 'next/navigation';
 
 export default function SignIn(): React.ReactElement {
     const auth = getAuth(app);
@@ -39,10 +40,12 @@ export default function SignIn(): React.ReactElement {
                 });
 
             // 로그인 이후 처리
-            // if (auth.user) {
-            //     setAuth(auth.user);
-            //     history.push('/');
-            // }
+            if (auth.currentUser) {
+                console.log(`로그인 성공: ${JSON.stringify(auth.currentUser)}`);
+                // redirect('/');   // 왜 안 되지?
+                // useRouter().replace(`/`);   // 함수의 몸체에서만 사용 가능
+                window.location.replace(`/`);
+            }
         } else {
             console.log("이메일 혹은 비밀번호를 입력해주세요.");
         }
