@@ -1,4 +1,4 @@
-"use client"
+'use client';
 import '@/app/components/Firebase';
 import { RecoilRoot } from 'recoil';
 import './globals.css';
