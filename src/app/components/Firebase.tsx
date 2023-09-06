@@ -1,6 +1,5 @@
 import { Firestore } from "@firebase/firestore/lite";
 import { initializeApp } from "firebase/app";
-import { getAuth, signInWithPopup, GoogleAuthProvider, GithubAuthProvider, createUserWithEmailAndPassword } from "firebase/auth";
 import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
 
 const firebaseConfig = {
@@ -13,6 +12,7 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
+export default app;
 
 // DB 접근 테스트: 됨
 // const db = getFirestore(app);
@@ -91,25 +91,3 @@ const app = initializeApp(firebaseConfig);
 //         console.log(`email: ${email}`);
 //         console.log(`credential: ${credential}`);
 //     });
-
-
-// 이메일 로그인: 됨
-const auth = getAuth(app);
-const email = "slimejam01@gmail.com";
-const password = "ssss1llll2iiii3";
-createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-        // Signed in 
-        const user = userCredential.user;
-
-        console.log("SUCCESS! =========================");
-        console.log(`user: ${user}`)
-    })
-    .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-
-        console.log("ERROR! *************************");
-        console.log(`errorCode: ${errorCode}`)
-        console.log(`errorMessage: ${errorMessage}`)
-    });

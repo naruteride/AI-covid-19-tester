@@ -1,12 +1,11 @@
+"use client"
 import '@/app/components/Firebase';
+import { RecoilRoot } from 'recoil';
 import './globals.css';
 import type { Metadata } from 'next';
 import { Noto_Sans_KR } from 'next/font/google';
 import Header from '@/app/components/Header';
 import Navigator from '@/app/components/Navigator';
-
-
-
 
 const noto_sans_KR = Noto_Sans_KR({
     weight: ['400', '700'],
@@ -30,9 +29,11 @@ export default function RootLayout({
 
             </head>
             <body className={noto_sans_KR.className}>
-                <Header />
-                <Navigator />
-                {children}
+                <RecoilRoot>
+                    <Header />
+                    <Navigator />
+                    {children}
+                </RecoilRoot>
                 <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js" defer></script>
                 <script
                     src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js" defer></script>
