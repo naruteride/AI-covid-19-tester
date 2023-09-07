@@ -3,9 +3,11 @@ import { useRecoilValue, useRecoilState } from 'recoil';
 import { userState } from './components/Auth';
 import styles from './page.module.css';
 import React from 'react';
+import "@/app/components/cssprogress.css";
 
 // 이미지 올리고, 검사 결과 받는 컴포넌트
 export default function Uploader(): React.ReactElement {
+    const TFURL = "https://teachablemachine.withgoogle.com/models/D0oa8NKP_/";
     const user = useRecoilValue(userState);
 
     return <>
@@ -39,7 +41,27 @@ function Board(): React.ReactElement {
 function Result(): React.ReactElement {
     return <>
         <div className={styles.result}>
+            <ProgressBar />
+            <ProgressBar />
+            <ProgressBar />
+            <ProgressBar />
+        </div>
+    </>
+}
 
+function ProgressBar(): React.ReactElement {
+    return <>
+        <div className="cssProgress">
+            <div className="progress2">
+                <div
+                    className="cssProgress-bar cssProgress-success cssProgress-active"
+                    data-percent="65"
+                    style={{
+                        width: "65%", transition: "none 0s ease 0s"
+                    }}>
+                    <span className="cssProgress-label">65%</span>
+                </div>
+            </div>
         </div>
     </>
 }
