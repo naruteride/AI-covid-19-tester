@@ -1,14 +1,13 @@
 'use client';
 // 파이어베이스
 import '@/app/components/Firebase';
-import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
 // 리코일
-import { RecoilRoot, useSetRecoilState } from 'recoil';
+import { RecoilRoot } from 'recoil';
 // 넥스트
 import type { Metadata } from 'next';
 import { Noto_Sans_KR } from 'next/font/google';
-import { redirect, useRouter, usePathname } from 'next/navigation';
 // 로컬 컴포넌트
+import Auth from './components/Auth';
 import Header from '@/app/components/Header';
 import Navigator from '@/app/components/Navigator';
 import './globals.css';
@@ -31,19 +30,6 @@ export default function RootLayout({
     children: React.ReactNode
 }) {
 
-
-    const auth = getAuth();
-    const router = useRouter();
-    const pathname = usePathname();
-    // 로그인 여부 검사
-    onAuthStateChanged(auth, (user: User | null) => {
-        console.log(`현재 로그인 상태: ${JSON.stringify(user)}`);
-        // 로그인 되어있지 않으면, 로그인 창으로 보내버림
-        if (user === null && !pathname.startsWith('/sign/')) {
-            router.replace(`/sign/in`);
-        }
-    })
-
     return (
         <html lang="ko">
             <head>
@@ -51,6 +37,7 @@ export default function RootLayout({
             </head>
             <body className={noto_sans_KR.className}>
                 <RecoilRoot>
+                    <Auth />
                     <Header />
                     <Navigator />
                     {/* 로그인 되어있지 않으면 메인 페이지를 보여주지 않게 하고싶음 */}

@@ -39,7 +39,7 @@ export default function SignIn({ params }: { params: { id: string } }): React.Re
                 await signInWithEmailAndPassword(auth, inputEmailRef.current.value, inputPasswordRef.current.value)
                     .then((userCredential) => {
                         // 로그인 성공
-                        const user = userCredential.user;
+                        // const user = userCredential.user;
                     })
                     .catch((error) => {
                         // 로그인 실패
@@ -53,7 +53,7 @@ export default function SignIn({ params }: { params: { id: string } }): React.Re
                 await createUserWithEmailAndPassword(auth, inputEmailRef.current.value, inputPasswordRef.current.value)
                     .then((userCredential) => {
                         // 회원가입 성공
-                        const user = userCredential.user;
+                        // const user = userCredential.user;
                     })
                     .catch((error) => {
                         // 회원가입 실패
@@ -78,29 +78,31 @@ export default function SignIn({ params }: { params: { id: string } }): React.Re
 
 
     return <>
-        <label htmlFor="email">
-            이메일
-            <input
-                type="text"
-                id="email"
-                name="email"
-                placeholder="이메일"
-                ref={inputEmailRef}
-            />
-        </label>
-        <label htmlFor="password">
-            비밀번호
-            <input
-                type="password"
-                id="password"
-                name="password"
-                placeholder="비밀번호"
-                ref={inputPasswordRef}
-            />
-        </label>
+        <main>
+            <label htmlFor="email">
+                이메일
+                <input
+                    type="text"
+                    id="email"
+                    name="email"
+                    placeholder="이메일"
+                    ref={inputEmailRef}
+                />
+            </label>
+            <label htmlFor="password">
+                비밀번호
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="비밀번호"
+                    ref={inputPasswordRef}
+                />
+            </label>
 
-        <button onClick={handleSignIn} type="submit">
-            {params.id === 'in' ? '로그인' : '회원가입'}
-        </button>
+            <button onClick={handleSignIn} type="submit">
+                {params.id === 'in' ? '로그인' : '회원가입'}
+            </button>
+        </main>
     </>
 }
