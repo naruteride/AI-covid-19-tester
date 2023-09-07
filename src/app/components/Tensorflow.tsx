@@ -1,11 +1,10 @@
-import * as tf from '@tensorflow/tfjs';
 import * as tmImage from '@teachablemachine/image';
 
 const TFURL = "https://teachablemachine.withgoogle.com/models/D0oa8NKP_/";
-let model: any//, maxPredictions: any;
+let model: any;
 
 // 모델 초기화
-async function TFInit(/*{ progressBarContainerRef }: { progressBarContainerRef: HTMLElement }*/) {
+async function TFInit() {
     const modelURL = TFURL + "model.json";
     const metadataURL = TFURL + "metadata.json";
 
@@ -24,10 +23,6 @@ TFInit();
 // 결과 반환
 async function predict(image: HTMLImageElement) {
     const prediction = await model.predict(image);
-    // for (let i = 0; i < maxPredictions; i++) {
-    //     classPrediction = prediction[i].className + ": " + prediction[i].probability.toFixed(2);
-    //     progressBarContainer.childNodes[i].innerHTML = classPrediction;
-    // }
     return prediction;
 }
 
