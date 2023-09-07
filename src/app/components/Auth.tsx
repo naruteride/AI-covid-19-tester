@@ -5,7 +5,7 @@ import { atom, useSetRecoilState } from 'recoil';
 // 넥스트
 import { usePathname, useRouter } from 'next/navigation';
 
-// 리코일 아톰
+// 리코일 아톰: 사용자 데이터를 저장함
 export const userState = atom<User | null>({
     key: 'userState',
     default: null,

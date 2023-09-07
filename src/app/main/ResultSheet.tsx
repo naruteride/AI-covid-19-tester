@@ -5,7 +5,7 @@ export default function ResultSheet() {
 
     return <>
         <div className={styles.resultSheet}>
-            <h3>수치</h3>
+            <h3>검사 결과</h3>
             <ProgressBar />
             <ProgressBar />
             <ProgressBar />

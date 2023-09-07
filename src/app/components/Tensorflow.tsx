@@ -4,6 +4,7 @@ import * as tmImage from '@teachablemachine/image';
 const TFURL = "https://teachablemachine.withgoogle.com/models/D0oa8NKP_/";
 let model: any//, maxPredictions: any;
 
+// 모델 초기화
 async function TFInit(/*{ progressBarContainerRef }: { progressBarContainerRef: HTMLElement }*/) {
     const modelURL = TFURL + "model.json";
     const metadataURL = TFURL + "metadata.json";
@@ -15,12 +16,12 @@ async function TFInit(/*{ progressBarContainerRef }: { progressBarContainerRef: 
     model = await tmImage.load(modelURL, metadataURL);
 
     // progressBarContainer = progressBarContainerRef;
-    return model.getTotalClasses();
+    // return model.getTotalClasses();
 }
 
+TFInit();
 
-export const totalClasses = TFInit();
-
+// 결과 반환
 async function predict(image: HTMLImageElement) {
     const prediction = await model.predict(image);
     // for (let i = 0; i < maxPredictions; i++) {
@@ -30,9 +31,7 @@ async function predict(image: HTMLImageElement) {
     return prediction;
 }
 
-// const imageInputElement = document.querySelector("#image");
-// imageInputElement.addEventListener("change", updateImageDisplay);
-
+// 이미지 업데이트 및 결과 반환
 export async function updateImageDisplay(
     preview: HTMLElement, imageInputElement: HTMLInputElement
 ) {
@@ -43,11 +42,15 @@ export async function updateImageDisplay(
     const imageFile = imageInputElement.files![0];
     const previewImage = document.createElement("img");
     previewImage.src = URL.createObjectURL(imageFile);
+    previewImage.style.width = "100%";
+    previewImage.style.height = "100%";
+    previewImage.style.objectFit = "cover";
 
     preview.appendChild(previewImage);
 
-    await delay(500);
-    await predict(previewImage);
+    await delay(1500);
+    return await predict(previewImage);
+
 }
 
 function delay(ms: number) {
