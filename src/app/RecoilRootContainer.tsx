@@ -6,7 +6,7 @@ import Auth from './components/Auth';
 import Header from '@/app/components/Header';
 import Navigator from '@/app/components/Navigator';
 
-export default function RecoilRootContainer({ children }: { children: any }) {
+export default function RecoilRootContainer({ children }: { children: React.ReactNode }) {
     return <>
         <RecoilRoot>
             <Auth />
