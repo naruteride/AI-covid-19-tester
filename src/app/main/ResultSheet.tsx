@@ -1,30 +1,48 @@
 import styles from './page.module.css';
+import { resultState } from './Uploader';
+import { useRecoilValue } from 'recoil';
 
 // 검사 결과 시트
 export default function ResultSheet() {
+    const resultSheet = useRecoilValue(resultState);
+    const ProgressBars = [];
+
+    for (let result in resultSheet) {
+        ProgressBars.push(<ProgressBar type={result} value={resultSheet[result]} />)
+    }
 
     return <>
         <div className={styles.resultSheet}>
             <h3>검사 결과</h3>
-            <ProgressBar />
-            <ProgressBar />
-            <ProgressBar />
-            <ProgressBar />
+            {ProgressBars}
         </div>
     </>
 }
 
-function ProgressBar(): React.ReactElement {
+function ProgressBar({ type, value }: { type: string, value: number }): React.ReactElement {
+    let color = ``;
+    switch (type) {
+        case '코로나-19':
+            color = 'cssProgress-danger';
+            break;
+        case '바이러스성 폐렴':
+            color= 'cssProgress-info';
+            break;
+        case '박테리아성 폐렴':
+            color = 'cssProgress-success';
+            break;
+    }
     return <>
         <div className="cssProgress">
+            {type}
             <div className="progress2">
                 <div
-                    className="cssProgress-bar cssProgress-success cssProgress-active"
-                    data-percent="0"
+                    className={`cssProgress-bar cssProgress-active ${color}`}
+                    data-percent={value}
                     style={{
-                        width: "0%", transition: "none 0s ease 0s"
+                        width: `${value}%`,
                     }}>
-                    <span className="cssProgress-label">0%</span>
+                    <span className="cssProgress-label">{value}%</span>
                 </div>
             </div>
         </div>

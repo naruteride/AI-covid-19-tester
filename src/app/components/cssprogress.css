@@ -23,6 +23,7 @@
     overflow: hidden;
     width: 100%;
     font-family: "Roboto", sans-serif;
+    transition: 0.2s;
 }
 
 .cssProgress .cssProgress-bar {

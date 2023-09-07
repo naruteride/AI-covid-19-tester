@@ -10,10 +10,10 @@ import { updateImageDisplay } from '@/app/components/Tensorflow';
 export const resultState = atom<Object>({
     key: 'resultState',
     default: {
-        Healthy: 0,
-        covid19: 0,
-        ViralPneumonia: 0,
-        BacterialViralPneumonia: 0,
+        '건강함': 0,
+        '코로나-19': 0,
+        '바이러스성 폐렴': 0,
+        '박테리아성 폐렴': 0,
     },
     dangerouslyAllowMutability: true,
 });
@@ -27,20 +27,15 @@ export default function Uploader(): React.ReactElement {
     const handleImageChange = async (event: { target: HTMLInputElement; }) => {
         // 검사 판에 이미지 업로드 및 모델에 이미지 전송
         const prediction = await updateImageDisplay(board.current!, event.target);
-        
-        
         console.log(prediction);
-
 
         // 검사 결과를 리코일에 저장
         setResult({
-            Healthy: prediction[0].probability.toFixed(2) * 100,
-            covid19: prediction[1].probability.toFixed(2) * 100,
-            ViralPneumonia: prediction[2].probability.toFixed(2) * 100,
-            BacterialViralPneumonia: prediction[3].probability.toFixed(2) * 100,
+            '건강함': prediction[0].probability.toFixed(2) * 100,
+            '코로나-19': prediction[1].probability.toFixed(2) * 100,
+            '바이러스성 폐렴': prediction[2].probability.toFixed(2) * 100,
+            '박테리아성 폐렴': prediction[3].probability.toFixed(2) * 100,
         })
-        console.log(result);
-
     }
 
     return <>

@@ -48,7 +48,7 @@ export async function updateImageDisplay(
 
     preview.appendChild(previewImage);
 
-    await delay(1500);
+    await delay(2000);
     return await predict(previewImage);
 
 }
