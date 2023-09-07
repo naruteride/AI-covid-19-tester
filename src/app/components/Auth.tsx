@@ -6,7 +6,7 @@ import { atom, useSetRecoilState } from 'recoil';
 import { usePathname, useRouter } from 'next/navigation';
 
 // 리코일 아톰
-export const userState = atom({
+export const userState = atom<User | null>({
     key: 'userState',
     default: null,
     dangerouslyAllowMutability: true,
