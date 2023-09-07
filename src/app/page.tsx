@@ -1,5 +1,5 @@
-import styles from './page.module.css'
-import Uploader from './Uploader'
+import styles from '@/app/main/page.module.css';
+import Uploader from '@/app/main/Uploader';
 import Footer from '@/app/components/Footer';
 
 export default function Main() {

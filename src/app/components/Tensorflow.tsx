@@ -1,9 +1,10 @@
+import * as tf from '@tensorflow/tfjs';
 import * as tmImage from '@teachablemachine/image';
 
 const TFURL = "https://teachablemachine.withgoogle.com/models/D0oa8NKP_/";
-let model: any, maxPredictions: any;
+let model: any//, maxPredictions: any;
 
-export async function init({ }) {
+async function TFInit(/*{ progressBarContainerRef }: { progressBarContainerRef: HTMLElement }*/) {
     const modelURL = TFURL + "model.json";
     const metadataURL = TFURL + "metadata.json";
 
@@ -12,58 +13,43 @@ export async function init({ }) {
     // or files from your local hard drive
     // Note: the pose library adds "tmImage" object to your window (window.tmImage)
     model = await tmImage.load(modelURL, metadataURL);
-    maxPredictions = model.getTotalClasses();
 
-    labelContainer = document.getElementById("label-container");
-    for (let i = 0; i < maxPredictions; i++) { // class labels
-        labelContainer.appendChild(document.createElement("div"));
-    }
+    // progressBarContainer = progressBarContainerRef;
+    return model.getTotalClasses();
 }
 
-async function predict(image) {
+
+export const totalClasses = TFInit();
+
+async function predict(image: HTMLImageElement) {
     const prediction = await model.predict(image);
-    for (let i = 0; i < maxPredictions; i++) {
-        classPrediction = prediction[i].className + ": " + prediction[i].probability.toFixed(2);
-        labelContainer.childNodes[i].innerHTML = classPrediction;
-    }
+    // for (let i = 0; i < maxPredictions; i++) {
+    //     classPrediction = prediction[i].className + ": " + prediction[i].probability.toFixed(2);
+    //     progressBarContainer.childNodes[i].innerHTML = classPrediction;
+    // }
+    return prediction;
 }
 
+// const imageInputElement = document.querySelector("#image");
+// imageInputElement.addEventListener("change", updateImageDisplay);
 
-const imageInputElement = document.querySelector("#image");
-const preview = document.querySelector(".preview");
-
-imageInputElement.addEventListener("change", updateImageDisplay);
-
-async function updateImageDisplay() {
+export async function updateImageDisplay(
+    preview: HTMLElement, imageInputElement: HTMLInputElement
+) {
     while (preview.firstChild) {
         preview.removeChild(preview.firstChild);
     }
 
     const imageFile = imageInputElement.files[0];
-    const para = document.createElement("p");
-
-    para.textContent = imageFile.name;
     const previewImage = document.createElement("img");
     previewImage.src = URL.createObjectURL(imageFile);
-    previewImage.style = `
-                max-width: 20rem;
-            `;
 
     preview.appendChild(previewImage);
-    preview.appendChild(para);
-    para.textContent = "3초만 기다려주세요!!"
-    preview.appendChild(para);
 
-    imageInputElement.style = `
-                display: none;
-            `;
-
-    await delay(2000);
-
+    await delay(500);
     await predict(previewImage);
 }
 
-
-function delay(ms) {
+function delay(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }

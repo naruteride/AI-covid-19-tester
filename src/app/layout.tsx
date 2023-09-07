@@ -43,7 +43,7 @@ export default function RootLayout({
                     {/* 로그인 되어있지 않으면 메인 페이지를 보여주지 않게 하고싶음 */}
                     {children}
                 </RecoilRoot>
-                <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js" defer></script>
+                {/* <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js" defer></script> */}
             </body>
         </html>
     )
