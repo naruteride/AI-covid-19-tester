@@ -25,8 +25,12 @@ export default function Auth(): null {
             // 로그인 되어있지 않으면, 로그인 창으로 보내버림
             router.replace(`/sign/in`);
         } else {
-            // 로그인 되어있음.
+            // 로그인 되어있음
             setUserState(user);
+            // 민감한 정보는 https 쿠키에 저장하자!
+            // expires = 만료 시간
+            // path = 다른 곳으로 전송 안 되게 함
+            // document.cookie = "expires=Thu, 1 Jan 2023 12:00:00 UTC; path=/; secure; HttpOnly";
         }
     })
 
