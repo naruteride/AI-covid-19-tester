@@ -26,7 +26,7 @@ export default function RootLayout({
     return (
         <html lang="ko">
             <body className={noto_sans_KR.className}>
-                <RecoilRootContainer children={children} />
+                <RecoilRootContainer>{children}</RecoilRootContainer>
             </body>
         </html>
     )
