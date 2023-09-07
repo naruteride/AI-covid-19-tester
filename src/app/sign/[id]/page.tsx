@@ -3,25 +3,33 @@
 import {
     getAuth,
     signInWithEmailAndPassword,
-    createUserWithEmailAndPassword
+    createUserWithEmailAndPassword,
+    signOut
 } from "firebase/auth";
-// 리코일
-import { useSetRecoilState } from 'recoil';
 // 넥스트
 import { useRouter } from 'next/navigation';
 // 리엑트
 import { useRef } from "react";
 // 로컬 컴포넌트
 import app from '@/app/components/Firebase';
-import { userState } from "@/app/components/Auth";
 
 
 export default function SignIn({ params }: { params: { id: string } }): React.ReactElement {
     const auth = getAuth(app);
     const Router = useRouter();
-    const setUserState = useSetRecoilState(userState);
 
-    if (params.id !== 'in' && params.id !== 'up' && params.id !== 'out') {
+    if (params.id === 'out') {
+        // 로그아웃
+        console.log("로그아웃 시도!")
+        signOut(auth).then(() => {
+            // 로그아웃 성공
+            console.log("로그아웃 성공");
+        }).catch((error) => {
+            // 로그아웃 실패
+            console.log("로그아웃 실패");
+            console.log(error);
+        });
+    } else if (params.id !== 'in' && params.id !== 'up') {
         Router.replace(`/sign/in`);
     }
 
@@ -61,14 +69,13 @@ export default function SignIn({ params }: { params: { id: string } }): React.Re
                         console.log(`errorCode: ${error.code}`);
                         console.log(`errorMessage: ${error.message}`);
                     });
-            } else if (params.id === 'out') {
-                // 로그아웃
-                // ...
+            } else {
+                console.log('로그인 과정에서 에러 발생!');
+                console.log('에러 코드: 1');
             }
 
-            // 로그인 이후 처리
+            // 로그인 or 회원가입 이후 처리
             if (auth.currentUser) {
-                setUserState(auth.currentUser);
                 Router.replace(`/`);
             }
         } else {

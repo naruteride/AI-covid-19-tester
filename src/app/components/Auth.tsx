@@ -1,5 +1,8 @@
-import { atom, useSetRecoilState } from 'recoil';
+// 파이어베이스
 import { getAuth, onAuthStateChanged, User } from "firebase/auth";
+// 리코일
+import { atom, useSetRecoilState } from 'recoil';
+// 넥스트
 import { usePathname, useRouter } from 'next/navigation';
 
 // 리코일 아톰
@@ -9,7 +12,7 @@ export const userState = atom({
     dangerouslyAllowMutability: true,
 });
 
-// 로그인 상태관리
+// 로그인 상태관리 컴포넌트
 export default function Auth(): null {
     const auth = getAuth();
     const router = useRouter();
