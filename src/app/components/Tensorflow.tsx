@@ -40,7 +40,7 @@ export async function updateImageDisplay(
         preview.removeChild(preview.firstChild);
     }
 
-    const imageFile = imageInputElement.files[0];
+    const imageFile = imageInputElement.files![0];
     const previewImage = document.createElement("img");
     previewImage.src = URL.createObjectURL(imageFile);
 
