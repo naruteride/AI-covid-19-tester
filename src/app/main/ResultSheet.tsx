@@ -1,5 +1,5 @@
 import styles from './page.module.css';
-import { resultState } from './Uploader';
+import { resultState, ResultStateType } from './Uploader';
 import { useRecoilValue } from 'recoil';
 
 // 검사 결과 시트

@@ -6,8 +6,16 @@ import "@/app/components/cssprogress.css";
 import ResultSheet from './ResultSheet';
 import { updateImageDisplay } from '@/app/components/Tensorflow';
 
+export type ResultStateType = {
+    '건강함': number;
+    '코로나-19': number;
+    '바이러스성 폐렴': number;
+    '박테리아성 폐렴': number;
+    [key: string]: number;
+};
+
 // 리코일 아톰: 검사 결과를 저장함
-export const resultState = atom<Object>({
+export const resultState = atom<ResultStateType>({
     key: 'resultState',
     default: {
         '건강함': 0,
