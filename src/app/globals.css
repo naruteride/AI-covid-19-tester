@@ -70,6 +70,22 @@ a {
     color: inherit;
 }
 
+.loading {
+    border-radius: 0.5rem;
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    z-index: 9999;
+    top: 2rem;
+    right: 2rem;
+    bottom: 2rem;
+    left: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 1rem -0.1rem rgba(0, 0, 0, 0.5);
+}
+
 @media (prefers-color-scheme: dark) {
     html {
         color-scheme: dark;

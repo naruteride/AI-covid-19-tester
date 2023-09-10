@@ -1,10 +1,13 @@
 'use client'
-import { atom, useRecoilState } from 'recoil';
+import { atom, useRecoilState, useRecoilValue } from 'recoil';
 import styles from './page.module.css';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import "@/app/components/cssprogress.css";
 import ResultSheet from './ResultSheet';
 import { updateImageDisplay } from '@/app/components/Tensorflow';
+import { uploadResultData } from '../components/Firebase';
+import { userState } from '../components/Auth';
+import { User } from 'firebase/auth';
 
 export type ResultStateType = {
     '건강함': number;
@@ -31,12 +34,13 @@ export default function Uploader(): React.ReactElement {
     const [result, setResult] = useRecoilState(resultState);
     const board = useRef(null);
     const [loading, setLoading] = useState(false);
+    const user: User | null = useRecoilValue(userState);
 
     // 검사 판에 이미지가 변경되면 작동
     const handleImageChange = async (event: { target: HTMLInputElement; }) => {
         // 로딩 시작
         setLoading(true);
-        
+
         // 검사 판에 이미지 업로드 및 모델에 이미지 전송
         const prediction = await updateImageDisplay(board.current!, event.target);
 
@@ -48,6 +52,16 @@ export default function Uploader(): React.ReactElement {
             '박테리아성 폐렴': prediction[3].probability.toFixed(2) * 100,
         })
     }
+
+    useEffect(() => {
+        // 검사 결과를 DB에 저장
+        async function fetchData() {
+            await uploadResultData(user, result);
+            setLoading(false);  // 로딩 끝
+        }
+
+        fetchData();
+    }, [result]);
 
     return <>
         <section className={styles.uploader}>

@@ -20,10 +20,9 @@ export default function SignIn({ params }: { params: { id: string } }): React.Re
 
     if (params.id === 'out') {
         // 로그아웃
-        console.log("로그아웃 시도!")
         signOut(auth).then(() => {
             // 로그아웃 성공
-            console.log("로그아웃 성공");
+            Router.push('/sign/in');
         }).catch((error) => {
             // 로그아웃 실패
             console.log("로그아웃 실패");

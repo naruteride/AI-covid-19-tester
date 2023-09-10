@@ -2,16 +2,12 @@ import { Dispatch, SetStateAction, useEffect } from 'react';
 import styles from './page.module.css';
 import { resultState, ResultStateType } from './Uploader';
 import { useRecoilValue } from 'recoil';
+import Loading from '../components/Loading';
 
 // 검사 결과 시트
 export default function ResultSheet({ loading, setLoading }: { loading: boolean, setLoading: Dispatch<SetStateAction<boolean>> }) {
     const resultSheet = useRecoilValue(resultState);
     const ProgressBars = [];
-
-    // 로딩 해제
-    useEffect(() => {
-        setLoading(false);
-    }, [resultSheet])
 
     for (let result in resultSheet) {
         ProgressBars.push(<ProgressBar type={result} value={resultSheet[result]} />)
@@ -20,7 +16,8 @@ export default function ResultSheet({ loading, setLoading }: { loading: boolean,
     return <>
         <div className={styles.resultSheet}>
             <h3>검사 결과</h3>
-            {loading ? <div>Loading...</div> : ProgressBars}
+            {loading ? <Loading /> : ''}
+            {ProgressBars}
         </div>
     </>
 }
