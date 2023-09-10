@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction, useEffect } from 'react';
 import styles from './page.module.css';
 import { resultState, ResultStateType } from './Uploader';
 import { useRecoilValue } from 'recoil';
-import Loading from '../components/Loading';
+import Loading from '@/app/components/Loading';
 
 // 검사 결과 시트
 export default function ResultSheet({ loading, setLoading }: { loading: boolean, setLoading: Dispatch<SetStateAction<boolean>> }) {

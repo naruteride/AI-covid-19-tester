@@ -41,7 +41,6 @@ export async function uploadResultData(user: User | null, result: ResultStateTyp
     
     if (docSnap) {
         // 만약 이미 오늘 X-ray 문서가 존재한다면 덮어쓰기
-        console.log("덮어씀!");
         await setDoc(doc(db, "XrayResults", docSnap.id), {
             'userID': user.uid,
             'date': Timestamp.now(),
@@ -50,11 +49,8 @@ export async function uploadResultData(user: User | null, result: ResultStateTyp
             'viral pneumonia': result["바이러스성 폐렴"],
             'bacterial pneumonia': result["박테리아성 폐렴"]
         });
-        
-        console.log(`document: ${JSON.stringify(docSnap.data())}`)
     } else {
         // 만약 오늘 X-ray 문서가 없다면 새로 만들기
-        console.log("새로 만듦!");
         await addDoc(collection(db, "XrayResults"), {
             'userID': user.uid,
             'date': Timestamp.now(),
