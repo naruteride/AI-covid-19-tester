@@ -1,5 +1,6 @@
 :root {
     --background-color: #fbfbfb;
+    --board-width: 22rem;
 }
 
 @media (prefers-color-scheme: dark) {

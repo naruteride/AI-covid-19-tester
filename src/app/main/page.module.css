@@ -12,11 +12,7 @@
     margin-bottom: 0.2rem;
 }
 
-.button {
-    width: 22rem;
-    padding: 1rem 0 1rem 6rem;
-    cursor: pointer;
-}
+
 
 .inspection {
     width: 100%;
@@ -27,7 +23,7 @@
 
 .board {
     position: relative;
-    width: 22rem;
+    width: var(--board-width);
     padding: 3rem;
     background:
         linear-gradient(30deg, transparent 45%, #272727 0, #272727 55%, transparent 0),
@@ -63,6 +59,18 @@
     background-position: center;
     background-size: 22px 22px;
     background-repeat: no-repeat;
+}
+
+.inputFileContainer {
+    width: var(--board-width);
+}
+
+.inputFile {
+    width: 12rem;
+    margin: auto;
+    padding: 1rem 0 1rem 0;
+    cursor: pointer;
+    display: block;
 }
 
 .resultSheet {

@@ -80,7 +80,9 @@ export default function Uploader(): React.ReactElement {
                 <ResultSheet loading={loading} setLoading={setLoading} />    {/* 검사 결과 시트 */}
             </div>
 
-            <input onChange={handleImageChange} className={styles.button} type="file" id="image" name="image" accept="image/png, image/jpeg"></input>
+            <div className={styles.inputFileContainer}>
+                <input onChange={handleImageChange} className={styles.inputFile} type="file" id="image" name="image" accept="image/png, image/jpeg"></input>
+            </div>
         </section>
     </>
 }
