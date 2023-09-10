@@ -1,6 +1,10 @@
 import { initializeApp } from "firebase/app";
 import { Firestore } from "@firebase/firestore/lite";
-import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
+import { getFirestore, collection, getDocs, setDoc, doc, Timestamp } from 'firebase/firestore/lite';
+import { useRecoilState, useRecoilValue } from "recoil";
+import { resultState } from "../main/Uploader";
+import { userState } from "./Auth";
+import { User } from "firebase/auth";
 
 const firebaseConfig = {
     apiKey: "AIzaSyC_K--t3XLntBTN_NWsR7rhIf_B2Fec5Fk",
@@ -13,16 +17,21 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 export default app;
+const db = getFirestore(app);
 
-// DB 접근 테스트: 됨
-// const db = getFirestore(app);
 
-// // Get a list of cities from your database
-// async function getEmail(db: Firestore) {
-//     const UsersCol = collection(db, 'Users');
-//     const UsersSnapshot = await getDocs(UsersCol);
-//     const UsersList = UsersSnapshot.docs.map(doc => doc.data());
-//     console.log(`UsersList: ${JSON.stringify(UsersList)}`)
-//     return UsersList;
-// }
-// getEmail(db)
+
+// 결과를 DB에 저장함
+async function uploadResultData() {
+    const result = useRecoilValue(resultState);
+    const user: User | null = useRecoilValue(userState)
+
+    await setDoc(doc(db, "XrayResults"), {
+        'userID': user?.uid,
+        'date': Timestamp.now(),
+        'healthy': result["건강함"],
+        'covid-19': result["코로나-19"],
+        'viral pneumonia': result["바이러스성 폐렴"],
+        'bacterial pneumonia': result["박테리아성 폐렴"]
+    });
+}

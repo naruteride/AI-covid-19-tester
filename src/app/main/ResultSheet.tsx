@@ -1,11 +1,17 @@
+import { Dispatch, SetStateAction, useEffect } from 'react';
 import styles from './page.module.css';
 import { resultState, ResultStateType } from './Uploader';
 import { useRecoilValue } from 'recoil';
 
 // 검사 결과 시트
-export default function ResultSheet() {
+export default function ResultSheet({ loading, setLoading }: { loading: boolean, setLoading: Dispatch<SetStateAction<boolean>> }) {
     const resultSheet = useRecoilValue(resultState);
     const ProgressBars = [];
+
+    // 로딩 해제
+    useEffect(() => {
+        setLoading(false);
+    }, [resultSheet])
 
     for (let result in resultSheet) {
         ProgressBars.push(<ProgressBar type={result} value={resultSheet[result]} />)
@@ -14,7 +20,7 @@ export default function ResultSheet() {
     return <>
         <div className={styles.resultSheet}>
             <h3>검사 결과</h3>
-            {ProgressBars}
+            {loading ? <div>Loading...</div> : ProgressBars}
         </div>
     </>
 }
@@ -26,7 +32,7 @@ function ProgressBar({ type, value }: { type: string, value: number }): React.Re
             color = 'cssProgress-danger';
             break;
         case '바이러스성 폐렴':
-            color= 'cssProgress-info';
+            color = 'cssProgress-info';
             break;
         case '박테리아성 폐렴':
             color = 'cssProgress-success';

@@ -8,14 +8,7 @@ async function TFInit() {
     const modelURL = TFURL + "model.json";
     const metadataURL = TFURL + "metadata.json";
 
-    // load the model and metadata
-    // Refer to tmImage.loadFromFiles() in the API to support files from a file picker
-    // or files from your local hard drive
-    // Note: the pose library adds "tmImage" object to your window (window.tmImage)
     model = await tmImage.load(modelURL, metadataURL);
-
-    // progressBarContainer = progressBarContainerRef;
-    // return model.getTotalClasses();
 }
 
 TFInit();
@@ -48,6 +41,7 @@ export async function updateImageDisplay(
 
 }
 
+// promise 딜레이
 function delay(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }

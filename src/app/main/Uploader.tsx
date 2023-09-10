@@ -1,7 +1,7 @@
 'use client'
 import { atom, useRecoilState } from 'recoil';
 import styles from './page.module.css';
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import "@/app/components/cssprogress.css";
 import ResultSheet from './ResultSheet';
 import { updateImageDisplay } from '@/app/components/Tensorflow';
@@ -30,12 +30,15 @@ export const resultState = atom<ResultStateType>({
 export default function Uploader(): React.ReactElement {
     const [result, setResult] = useRecoilState(resultState);
     const board = useRef(null);
+    const [loading, setLoading] = useState(false);
 
     // 검사 판에 이미지가 변경되면 작동
     const handleImageChange = async (event: { target: HTMLInputElement; }) => {
+        // 로딩 시작
+        setLoading(true);
+        
         // 검사 판에 이미지 업로드 및 모델에 이미지 전송
         const prediction = await updateImageDisplay(board.current!, event.target);
-        console.log(prediction);
 
         // 검사 결과를 리코일에 저장
         setResult({
@@ -60,7 +63,7 @@ export default function Uploader(): React.ReactElement {
                     </div>
                 </label>
 
-                <ResultSheet />    {/* 검사 결과 시트 */}
+                <ResultSheet loading={loading} setLoading={setLoading} />    {/* 검사 결과 시트 */}
             </div>
 
             <input onChange={handleImageChange} className={styles.button} type="file" id="image" name="image" accept="image/png, image/jpeg"></input>
