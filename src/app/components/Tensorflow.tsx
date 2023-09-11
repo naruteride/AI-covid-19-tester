@@ -1,4 +1,4 @@
-// 'use client';
+'use client';
 import * as tmImage from '@teachablemachine/image';
 
 const TFURL = "https://teachablemachine.withgoogle.com/models/D0oa8NKP_/";
