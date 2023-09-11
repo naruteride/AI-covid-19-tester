@@ -65,7 +65,7 @@ export default function Uploader(): React.ReactElement {
     }, [result]);
 
     return <>
-        <section className={styles.uploader}>
+        <section id="uploader" className={styles.uploader}>
             <h1>AI 코로나 측정기</h1>
             <p>흉부 엑스레이 사진을 업로드 해주세요.</p>
             <br /><br />

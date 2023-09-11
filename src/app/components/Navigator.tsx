@@ -1,5 +1,6 @@
 // 'use client'
 import Link from 'next/link';
+import "./Navigator.css";
 
 export default function Navigator(): React.ReactElement {
     return <>
@@ -8,11 +9,11 @@ export default function Navigator(): React.ReactElement {
                 네비게이터
             </h3>
             <ul>
-                <Link href="./">
-                    <li>섹션 1</li>
+                <Link href="./#uploader">
+                    <li>AI 코로나 측정기</li>
                 </Link>
-                <Link href="./">
-                    <li>섹션 2</li>
+                <Link href="./#dashboard">
+                    <li>대시보드</li>
                 </Link>
             </ul>
         </nav>
