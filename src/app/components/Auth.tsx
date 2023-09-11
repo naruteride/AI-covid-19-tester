@@ -1,4 +1,4 @@
-// 'use client'
+'use client'
 // 파이어베이스
 import { getAuth, onAuthStateChanged, User } from "firebase/auth";
 // 리코일
