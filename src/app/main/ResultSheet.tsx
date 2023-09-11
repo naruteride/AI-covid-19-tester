@@ -1,7 +1,7 @@
-'use client'
+// 'use client'
 import { Dispatch, SetStateAction } from 'react';
 import styles from './page.module.css';
-import { resultState, ResultStateType } from './Uploader';
+import { resultState } from './Uploader';
 import { useRecoilValue } from 'recoil';
 import Loading from '@/app/components/Loading';
 

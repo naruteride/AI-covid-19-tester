@@ -1,4 +1,4 @@
-'use client'
+// 'use client'
 import { initializeApp } from "firebase/app";
 import { Firestore } from "@firebase/firestore/lite";
 import { getFirestore, collection, getDocs, setDoc, doc, Timestamp, query, where, addDoc, orderBy, limit, QueryDocumentSnapshot, DocumentData } from 'firebase/firestore/lite';

@@ -1,4 +1,4 @@
-'use client'
+// 'use client'
 import styles from '@/app/main/page.module.css';
 import Uploader from '@/app/main/Uploader';
 import Footer from '@/app/components/Footer';
