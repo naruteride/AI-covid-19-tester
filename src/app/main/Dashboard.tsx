@@ -7,12 +7,11 @@ import { User } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { resultState } from "./Uploader";
 
-
 export default function Dashboard() {
     const user = useRecoilValue<User | null>(userState);
     const result = useRecoilValue(resultState)
     const [dashboardData, setDashboardData] = useState<{ name: string; }[]>([{ name: "" }]);
-
+    const [waitForAwait, setWaitForAwait] = useState(false);
 
     async function fetchData() {
         if (user == null) {
@@ -23,12 +22,15 @@ export default function Dashboard() {
         if (dashboard !== undefined) {
             setDashboardData(dashboard);
         }
+        setWaitForAwait(false);
     }
 
     useEffect(() => {
+        setWaitForAwait(true);
         fetchData();
-    }, [user, result])
+    }, [user, result, waitForAwait]);
 
+    
     return <>
         <section id="dashboard">
             <h1>대시보드</h1>
