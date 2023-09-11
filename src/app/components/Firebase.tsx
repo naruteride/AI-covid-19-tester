@@ -73,8 +73,8 @@ export async function getDashboardData(user: User | null) {
 
     const DashboardData = [];
     const { startDate, lastDate }: {
-        startDate: Timestamp | null,
-        lastDate: Timestamp | null
+        startDate: Date | null,
+        lastDate: Date | null
     } = await getStartAndLastDate(user);
     const diagnosisHistory: {  // { 건강함: 97, 코로나: 2, ... } 만듦
         [key: string]: number;
@@ -135,7 +135,7 @@ async function getStartAndLastDate(user: User) {
         console.log(`인덱스 날짜: ${indexDate}`);
 
         // startDate 초기화
-        if (!acc.startDate) {
+        if (acc.startDate) {
             acc.startDate = indexDate;
         }
         // lastDate 초기화
@@ -155,8 +155,8 @@ async function getStartAndLastDate(user: User) {
 
         return acc;
     }, {
-        startDate: null,
-        lastDate: null,
+        startDate: null as Date | null,
+        lastDate: null as Date | null,
     });
 
     console.log(`리턴 할 startDate, lastDate: ${startDate}, ${lastDate}`);
