@@ -53,6 +53,7 @@ export default function Uploader(): React.ReactElement {
         })
     }
 
+    // result 값이 바뀔 때마다 실행
     useEffect(() => {
         // 검사 결과를 DB에 저장
         async function fetchData() {

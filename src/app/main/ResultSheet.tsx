@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useEffect } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import styles from './page.module.css';
 import { resultState, ResultStateType } from './Uploader';
 import { useRecoilValue } from 'recoil';
