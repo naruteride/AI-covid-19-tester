@@ -62,10 +62,9 @@ nav {
     width: 20rem;
     height: 100vh;
 
-    /* background-color: #3f3f3f; */
     background-image:
         radial-gradient(ellipse farthest-corner at 10px 10px, #373737, #373737 50%, transparent 50%),
-        linear-gradient(-30deg, #3f3f3f, #303030);
+        linear-gradient(-30deg, #3a3a3a, #303030);
     background-size:
     10px 10px,
     auto;
