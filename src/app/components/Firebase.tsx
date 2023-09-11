@@ -1,7 +1,6 @@
-'use client'
 import { initializeApp } from "firebase/app";
 import { Firestore } from "@firebase/firestore/lite";
-import { getFirestore, collection, getDocs, setDoc, doc, Timestamp, query, where, addDoc, orderBy, limit } from 'firebase/firestore/lite';
+import { getFirestore, collection, getDocs, setDoc, doc, Timestamp, query, where, addDoc, orderBy, limit, QueryDocumentSnapshot, DocumentData } from 'firebase/firestore/lite';
 import { useRecoilState, useRecoilValue } from "recoil";
 import { ResultStateType, resultState } from "../main/Uploader";
 import { userState } from "./Auth";
@@ -62,7 +61,7 @@ export async function uploadResultData(user: User | null, result: ResultStateTyp
         });
     }
 
-}
+};
 
 // 대시보드에 필요한 데이터를 반환함
 export async function getDashboardData(user: User | null) {
@@ -72,96 +71,59 @@ export async function getDashboardData(user: User | null) {
     };
 
     const DashboardData = [];
-    const { startDate, lastDate }: {
-        startDate: Date | null,
-        lastDate: Date | null
-    } = await getStartAndLastDate(user);
-    const diagnosisHistory: {  // { 건강함: 97, 코로나: 2, ... } 만듦
-        [key: string]: number;
-    } = {};
+    const userDocs = await getUserDocs(user);
+    // const [firstDate, lastDate] = await getFirstAndLastDate(userDocs);
 
-    if (startDate === null || lastDate === null) {
-        return;    // 시작 날짜 혹은 마지막 날짜가 존재하지 않을 경우 반환
-    }
-
-    // 기간 만큼 반복함
-    for (
-        let indexDate = startDate;
-        indexDate <= lastDate;
-        indexDate.setDate(indexDate.getDate() + 1)
-        
-    ) {
-        const formatedDate = formatDate(new Date(indexDate));
-
-        // 날짜와 같은 메모라이즈 문서들을 가져와서 forEach로 반복함
-        const MemorizeDocs = getMemorizeDocs(formatedDate);
-        (await MemorizeDocs).forEach(async memorizeDoc => {
-            const docRef = doc(db, "Users", memorizeDoc.data().user.id)
-            const userData = (await getDoc(docRef)).data();
-
-            // 각 메모라이즈 문서의 개수만큼 해당 유저의 값을 1 증가시킴
-            for (let userName in usersName) {
-                if (userName === userData?.name) {
-                    usersName[userName]++;
-                }
+    if (userDocs) {
+        for (let doc of userDocs) {
+            const data = doc.data(); // 문서 데이터 가져오기
+            const formatedDate = formatDate(data.date.toDate());
+            const resultState = {
+                "건강함": data["healthy"],
+                "코로나-19": data["covid-19"],
+                "바이러스성 폐렴": data["viral pneumonia"],
+                "박테리아성 폐렴": data["bacterial pneumonia"]
             }
-        })
-
-        DashboardData.push({ name: formatedDate, /*...usersName*/ })
+            DashboardData.push({ name: formatedDate, ...resultState })
+        }
+    } else {
+        // userDocs가 null일 경우 처리
+        console.log("문서가 없습니다.");
+        DashboardData.push({ name: "nothing" })
     }
-
     return DashboardData;
 }
 
-
-// 사진을 처음 올린 날과 마지막으로 올린 날을 반환함
-async function getStartAndLastDate(user: User) {
-    console.log("getStartAndLastDate 시작");
-
+// 유저의 모든 문서를 날짜 기준 오름차순으로 반환함
+async function getUserDocs(user: User) {
+    console.log(user.uid)
     const userQuery = query(
-        collection(db, "Project"),
-        where("user", "==", user.uid),
+        collection(db, "XrayResults"),
+        where("userID", "==", user.uid),
+        orderBy("date", "asc")
     );
     const userDocs = (await getDocs(userQuery)).docs;
 
     if (userDocs.length === 0) {
-        // 문서가 없는 경우 null 반환
-        return { startDate: null, lastDate: null };
+        // 문서가 하나도 없는 경우 null 반환
+        return null;
     }
 
-    const { startDate, lastDate } = userDocs.reduce((acc, doc) => {
-        const indexDate: Date = doc.data().date.toDate();
-        console.log(`DB의 date: ${doc.data().date.toDate()}`);
-        console.log(`인덱스 날짜: ${indexDate}`);
+    return userDocs;
+}
 
-        // startDate 초기화
-        if (acc.startDate) {
-            acc.startDate = indexDate;
-        }
-        // lastDate 초기화
-        if (!acc.lastDate) {
-            acc.lastDate = indexDate;
-        }
 
-        // 현재 날짜가 startDate보다 이전인 경우 갱신
-        if (indexDate < acc.startDate!) {
-            acc.startDate = indexDate;
-        }
+// 사진을 처음 올린 날과 마지막으로 올린 날을 반환함
+async function getFirstAndLastDate(userDocs: QueryDocumentSnapshot<DocumentData, DocumentData>[] | null) {
+    if (!userDocs || userDocs.length === 0) {
+        // 문서가 없거나 빈 배열인 경우 null 반환
+        return [null, null];
+    }
 
-        // 현재 날짜가 lastDate보다 이후인 경우 갱신
-        if (indexDate > acc.lastDate!) {
-            acc.lastDate = indexDate;
-        }
+    const firstDate = userDocs[0].data().date.toDate();
+    const lastDate = userDocs[userDocs.length - 1].data().date.toDate();
 
-        return acc;
-    }, {
-        startDate: null as Date | null,
-        lastDate: null as Date | null,
-    });
-
-    console.log(`리턴 할 startDate, lastDate: ${startDate}, ${lastDate}`);
-
-    return { startDate, lastDate }
+    return [firstDate, lastDate];
 }
 
 

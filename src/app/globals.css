@@ -62,6 +62,9 @@ nav {
 main {
     grid-area: main;
 }
+main>section {
+    margin-bottom: 4rem;
+}
 
 footer {
     grid-area: footer;
