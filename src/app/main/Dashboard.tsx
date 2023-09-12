@@ -14,11 +14,11 @@ export default function Dashboard() {
     const result = useRecoilValue(resultState)
     const [dashboardData, setDashboardData] = useState<{ name: string; }[]>([{ name: "" }]);
     const [waitForAwait, setWaitForAwait] = useState(false);
-    // let windowWidth = { current: 0 };
-    // useEffect(() => {
-    //     windowWidth = useRef(window.innerWidth);
-    // }, [])
-    const windowWidth = useRef(window.innerWidth);
+    let windowWidth = { current: 0 };
+    useEffect(() => {
+        windowWidth = useRef(window.innerWidth);
+    })
+    // const windowWidth = useRef(window.innerWidth);
 
     async function fetchData() {
         if (user == null) {
