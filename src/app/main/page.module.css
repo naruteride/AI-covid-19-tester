@@ -94,6 +94,10 @@
     .dashboard {
         padding: 3rem;
     }
+
+    .dashboard>h1 {
+        margin-bottom: 1rem;
+    }
     
     .chart {
         margin: auto -3rem;
