@@ -8,6 +8,7 @@ import { updateImageDisplay } from '@/app/components/Tensorflow';
 import { uploadResultData } from '../components/Firebase';
 import { userState } from '../components/Auth';
 import { User } from 'firebase/auth';
+import { enqueueSnackbar } from 'notistack'
 
 export type ResultStateType = {
     '건강함': number;
@@ -17,7 +18,8 @@ export type ResultStateType = {
     [key: string]: number;
 };
 
-export const resultStateInitData = {
+// resultState의 기본값
+const resultStateDefaultData = {
     '건강함': 0,
     '코로나-19': 0,
     '바이러스성 폐렴': 0,
@@ -27,7 +29,7 @@ export const resultStateInitData = {
 // 리코일 아톰: 검사 결과를 저장함
 export const resultState = atom<ResultStateType>({
     key: 'resultState',
-    default: { ...resultStateInitData },
+    default: { ...resultStateDefaultData },
     dangerouslyAllowMutability: true,
 });
 
@@ -42,6 +44,7 @@ export default function Uploader(): React.ReactElement {
     const handleImageChange = async (event: { target: HTMLInputElement; }) => {
         // 로딩 시작
         setLoading(true);
+        enqueueSnackbar('엑스레이 사진 검사 중...');
 
         // 검사 판에 이미지 업로드 및 모델에 이미지 전송
         const prediction = await updateImageDisplay(board.current!, event.target);
@@ -57,13 +60,18 @@ export default function Uploader(): React.ReactElement {
 
     // result 값이 바뀔 때마다 실행
     useEffect(() => {
-        // 검사 결과를 DB에 저장
+        const isDefaultResult = JSON.stringify(result) === JSON.stringify(resultStateDefaultData);
+
         async function fetchData() {
+            // 검사 결과를 DB에 저장
             await uploadResultData(user, result);
             setLoading(false);  // 로딩 끝
+            enqueueSnackbar('검사 완료!', { variant: 'success' });
         }
 
-        fetchData();
+        if (!isDefaultResult) { // result의 값이 기본값이라면 업로드 하지 않음.
+            fetchData();
+        }    
     }, [result]);
 
     return <>

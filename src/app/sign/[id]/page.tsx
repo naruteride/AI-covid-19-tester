@@ -13,9 +13,9 @@ import { useRef } from 'react';
 // 로컬 컴포넌트
 import app from '@/app/components/Firebase';
 import styles from './Sign.module.css'
-import { useSetRecoilState } from 'recoil';
-import { resultState, resultStateInitData } from '@/app/main/Uploader';
-
+import { useResetRecoilState } from 'recoil';
+import { resultState } from '@/app/main/Uploader';
+import { enqueueSnackbar } from 'notistack'
 
 export default function Sign({ params }: { params: { id: string } }): React.ReactElement {
     const auth = getAuth(app);
@@ -31,17 +31,17 @@ export default function Sign({ params }: { params: { id: string } }): React.Reac
         submitText = '회원가입';
     } else if (params.id === 'out') {   // 로그아웃
         submitText = '로그아웃';
-        const setResult = useSetRecoilState(resultState);
-        setResult({ ...resultStateInitData })
+        const resetResult = useResetRecoilState(resultState);
+        resetResult();
         signOut(auth)
             .then(() => {
                 // 로그아웃 성공
-                console.log('로그아웃 성공');
+                enqueueSnackbar('로그아웃 성공!', { variant: 'success' });
                 Router.push('/sign/in');
             })
             .catch((error) => {
                 // 로그아웃 실패
-                console.log('로그아웃 실패');
+                enqueueSnackbar('로그아웃 실패!', { variant: 'error' });
                 console.log(error);
             });
     } else {
@@ -60,21 +60,21 @@ export default function Sign({ params }: { params: { id: string } }): React.Reac
             try {
                 if (params.id === 'in') {   // 로그인
                     await signInWithEmailAndPassword(auth, email, password);
-                    console.log('로그인 성공');
+                    enqueueSnackbar('로그인 성공!', { variant: 'success' });
 
                 } else if (params.id === 'up') {    // 회원가입
                     const passwordCheck = inputPasswordCheckRef.current?.value;
                     if (password === passwordCheck) {   // 비밀번호와 비밀번호 확인이 일치하는지 검사
                         // 일치함
                         await createUserWithEmailAndPassword(auth, email, password);
-                        console.log('회원가입 성공');
+                        enqueueSnackbar('회원가입 성공!', { variant: 'success' });
                     } else {
                         // 일치하지 않음
-                        console.log('비밀번호와 비밀번호 확인이 일치하지 않습니다.');
+                        enqueueSnackbar('비밀번호와 비밀번호 확인이 일치하지 않습니다.', { variant: 'error' });
                     }
                 } else if (params.id === 'out') {   // 로그아웃
                     // 로그아웃 페이지에서 로딩이 다 끝나기 전에 서브밋 버튼을 누름
-                    console.log('로그아웃 중입니다. 조금만 기다려주세요!');
+                    enqueueSnackbar('로그아웃 중입니다. 조금만 기다려주세요!');
                 }
 
                 if (auth.currentUser) {
@@ -83,9 +83,10 @@ export default function Sign({ params }: { params: { id: string } }): React.Reac
                 }
             } catch (error) {
                 console.error('Sign 에러 발생:', error);
+                enqueueSnackbar('로그인 에러 발생!', { variant: 'error' });
             }
         } else {
-            console.log('이메일 혹은 비밀번호를 입력해주세요.');
+            enqueueSnackbar('이메일 혹은 비밀번호를 입력해주세요.', { variant: 'error' });
         }
     }
 
