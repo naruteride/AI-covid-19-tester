@@ -33,20 +33,20 @@ export const resultState = atom<ResultStateType>({
     dangerouslyAllowMutability: true,
 });
 
-// 이미지 올리고, 검사 결과 받는 컴포넌트
+// 사진를 올리고, 검사 결과 받는 컴포넌트
 export default function Uploader(): React.ReactElement {
     const [result, setResult] = useRecoilState(resultState);
     const board = useRef(null);
     const [loading, setLoading] = useState(false);
     const user: User | null = useRecoilValue(userState);
 
-    // 검사 판에 이미지가 변경되면 작동
+    // 검사 보드에 사진가 변경되면 작동
     const handleImageChange = async (event: { target: HTMLInputElement; }) => {
         // 로딩 시작
         setLoading(true);
         enqueueSnackbar('엑스레이 사진 검사 중...');
 
-        // 검사 판에 이미지 업로드 및 모델에 이미지 전송
+        // 검사 보드에 사진 업로드 및 모델에 사진 전송
         const prediction = await updateImageDisplay(board.current!, event.target);
 
         // 검사 결과를 리코일에 저장
@@ -81,7 +81,7 @@ export default function Uploader(): React.ReactElement {
             <br /><br />
 
             <div className={styles.inspection}>
-                {/* 엑스레이 검사 판 */}
+                {/* 엑스레이 검사 보드 */}
                 <label ref={board} htmlFor='image' className={styles.board}>
                     <div className={styles.line}>
                         <div className={styles.aim}></div>
