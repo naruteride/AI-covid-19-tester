@@ -20,6 +20,7 @@ import { enqueueSnackbar } from 'notistack'
 export default function Sign({ params }: { params: { id: string } }): React.ReactElement {
     const auth = getAuth(app);
     const Router = useRouter();
+    const resetResult = useResetRecoilState(resultState);
     const inputEmailRef = useRef<HTMLInputElement>(null);
     const inputPasswordRef = useRef<HTMLInputElement>(null);
     const inputPasswordCheckRef = useRef<HTMLInputElement>(null);
@@ -31,7 +32,6 @@ export default function Sign({ params }: { params: { id: string } }): React.Reac
         submitText = '회원가입';
     } else if (params.id === 'out') {   // 로그아웃
         submitText = '로그아웃';
-        const resetResult = useResetRecoilState(resultState);
         resetResult();
         signOut(auth)
             .then(() => {
