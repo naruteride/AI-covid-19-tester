@@ -24,9 +24,7 @@ async function predict(image: HTMLImageElement) {
 export async function updateImageDisplay(
     preview: HTMLElement, imageInputElement: HTMLInputElement
 ) {
-    while (preview.firstChild) {
-        preview.removeChild(preview.firstChild);
-    }
+    preview.removeChild(preview.firstChild!);
 
     const imageFile = imageInputElement.files![0];
     const previewImage = document.createElement("img");
@@ -35,7 +33,7 @@ export async function updateImageDisplay(
     previewImage.style.height = "100%";
     previewImage.style.objectFit = "cover";
 
-    preview.appendChild(previewImage);
+    preview.prepend(previewImage);
 
     await delay(2000);
     return await predict(previewImage);
