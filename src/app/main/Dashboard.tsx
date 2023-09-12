@@ -14,11 +14,11 @@ export default function Dashboard() {
     const result = useRecoilValue(resultState)
     const [dashboardData, setDashboardData] = useState<{ name: string; }[]>([{ name: "" }]);
     const [waitForAwait, setWaitForAwait] = useState(false);
-    let windowWidth = { current: 0 };
+    const [windowWidth, setWindowWidth] = useState(0);
     useEffect(() => {
-        windowWidth = useRef(window.innerWidth);
-    })
-    // const windowWidth = useRef(window.innerWidth);
+        setWindowWidth(window.innerWidth);
+        console.log(windowWidth)
+    }, [])
 
     async function fetchData() {
         if (user == null) {
@@ -37,32 +37,15 @@ export default function Dashboard() {
         fetchData();
     }, [user, result, waitForAwait]);
 
-
     return <>
         <section id="dashboard" className={styles.dashboard}>
             <h1>대시보드</h1>
             <p>과거의 진단 기록과 변화 추이를 확인합니다.</p>
             <br /><br />
-            {/* <LineChart
-                width={windowWidth.current > 1200 ? 800 : windowWidth.current}
-                height={windowWidth.current > 1200 ? 400 : windowWidth.current / 2}
-                data={dashboardData}
-                margin={{ top: 5, right: 60, bottom: 5, left: 0 }}
-                className={styles.chart}
-            >
-                <Line type="monotone" key={'건강함'} dataKey={'건강함'} stroke={'#3798d9'} />
-                <Line type="monotone" key={'코로나-19'} dataKey={'코로나-19'} stroke={'#ef5350'} />
-                <Line type="monotone" key={'바이러스성 폐렴'} dataKey={'바이러스성 폐렴'} stroke={'#9575cd'} />
-                <Line type="monotone" key={'박테리아성 폐렴'} dataKey={'박테리아성 폐렴'} stroke={'#66bb6a'} />
-                <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-                <XAxis dataKey="name" />
-                <YAxis />
-                <Tooltip />
-            </LineChart> */}
-            {windowWidth.current
+            {windowWidth
                 ? <LineChart
-                    width={windowWidth.current > 1200 ? 800 : windowWidth.current}
-                    height={windowWidth.current > 1200 ? 400 : windowWidth.current / 2}
+                    width={windowWidth > 1200 ? 800 : windowWidth}
+                    height={windowWidth > 1200 ? 400 : windowWidth / 2}
                     data={dashboardData}
                     margin={{ top: 5, right: 60, bottom: 5, left: 0 }}
                     className={styles.chart}
