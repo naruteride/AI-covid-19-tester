@@ -27,7 +27,7 @@ export const resultStateInitData = {
 // 리코일 아톰: 검사 결과를 저장함
 export const resultState = atom<ResultStateType>({
     key: 'resultState',
-    default: resultStateInitData,
+    default: { ...resultStateInitData },
     dangerouslyAllowMutability: true,
 });
 

@@ -32,7 +32,7 @@ export default function Sign({ params }: { params: { id: string } }): React.Reac
     } else if (params.id === 'out') {   // 로그아웃
         submitText = '로그아웃';
         const setResult = useSetRecoilState(resultState);
-        setResult(resultStateInitData)
+        setResult({ ...resultStateInitData })
         signOut(auth)
             .then(() => {
                 // 로그아웃 성공
@@ -44,9 +44,9 @@ export default function Sign({ params }: { params: { id: string } }): React.Reac
                 console.log('로그아웃 실패');
                 console.log(error);
             });
-        } else {    
-            // path가 in, up, out 중 하나가 아니라면, in으로 보내버림
-            Router.replace('/sign/in');
+    } else {
+        // path가 in, up, out 중 하나가 아니라면, in으로 보내버림
+        Router.replace('/sign/in');
     }
 
 
