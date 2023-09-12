@@ -127,6 +127,9 @@ a {
         left: -20rem;
         z-index: 20;
     }
+    nav.activate {
+        left: 0;
+    }
 
     main {
         width: auto;

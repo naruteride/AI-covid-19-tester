@@ -1,14 +1,20 @@
 // 'use client'
 import Link from 'next/link';
 import "./Navigator.css";
-import { useRecoilValue } from 'recoil';
+import { atom, useRecoilState, useRecoilValue } from 'recoil';
 import { userState } from '@/app/components/Auth';
+
+export const navigatorActivate = atom<boolean>({
+    key: 'navigatorActivate',
+    default: false,
+})
 
 export default function Navigator(): React.ReactElement {
     const user = useRecoilValue(userState)
+    const activate = useRecoilValue(navigatorActivate);
 
     return <>
-        <nav>
+        <nav className={activate ? 'activate' : ''}>
             <h3>
                 네비게이터
             </h3>
@@ -34,5 +40,17 @@ export default function Navigator(): React.ReactElement {
 
             </ul>
         </nav>
+        <Background />
     </>
+}
+
+
+
+function Background() {
+    const [activate, setActivate] = useRecoilState(navigatorActivate);
+    return <div
+        id='background'
+        className={activate ? 'activate' : ''}
+        onClick={() => setActivate(false)}
+    />
 }
