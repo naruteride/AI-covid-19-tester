@@ -13,6 +13,8 @@ import { useRef } from 'react';
 // 로컬 컴포넌트
 import app from '@/app/components/Firebase';
 import styles from './Sign.module.css'
+import { useSetRecoilState } from 'recoil';
+import { resultState, resultStateInitData } from '@/app/main/Uploader';
 
 
 export default function Sign({ params }: { params: { id: string } }): React.ReactElement {
@@ -29,6 +31,8 @@ export default function Sign({ params }: { params: { id: string } }): React.Reac
         submitText = '회원가입';
     } else if (params.id === 'out') {   // 로그아웃
         submitText = '로그아웃';
+        const setResult = useSetRecoilState(resultState);
+        setResult(resultStateInitData)
         signOut(auth)
             .then(() => {
                 // 로그아웃 성공

@@ -17,15 +17,17 @@ export type ResultStateType = {
     [key: string]: number;
 };
 
+export const resultStateInitData = {
+    '건강함': 0,
+    '코로나-19': 0,
+    '바이러스성 폐렴': 0,
+    '박테리아성 폐렴': 0,
+}
+
 // 리코일 아톰: 검사 결과를 저장함
 export const resultState = atom<ResultStateType>({
     key: 'resultState',
-    default: {
-        '건강함': 0,
-        '코로나-19': 0,
-        '바이러스성 폐렴': 0,
-        '박테리아성 폐렴': 0,
-    },
+    default: resultStateInitData,
     dangerouslyAllowMutability: true,
 });
 
