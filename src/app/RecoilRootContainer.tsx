@@ -1,4 +1,6 @@
 'use client';
+// 파이어베이스
+import '@/app/components/Firebase';
 // 리코일
 import { RecoilRoot } from "recoil";
 // 스낵바
