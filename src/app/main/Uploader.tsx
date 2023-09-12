@@ -71,7 +71,7 @@ export default function Uploader(): React.ReactElement {
 
         if (!isDefaultResult) { // result의 값이 기본값이라면 업로드 하지 않음.
             fetchData();
-        }    
+        }
     }, [result]);
 
     return <>
@@ -86,14 +86,16 @@ export default function Uploader(): React.ReactElement {
                     <div className={styles.line}>
                         <div className={styles.aim}></div>
                     </div>
+                    <input onChange={handleImageChange} className={styles.inputFile} type="file" id="image" name="image" accept="image/png, image/jpeg"></input>
                 </label>
 
+                {/* <div className={styles.inputFileContainer}>
+                    <input onChange={handleImageChange} className={styles.inputFile} type="file" id="image" name="image" accept="image/png, image/jpeg"></input>
+                </div> */}
                 <ResultSheet loading={loading} setLoading={setLoading} />    {/* 검사 결과 시트 */}
             </div>
 
-            <div className={styles.inputFileContainer}>
-                <input onChange={handleImageChange} className={styles.inputFile} type="file" id="image" name="image" accept="image/png, image/jpeg"></input>
-            </div>
+
         </section>
     </>
 }

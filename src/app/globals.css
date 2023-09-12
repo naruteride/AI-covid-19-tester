@@ -1,10 +1,8 @@
 :root {
     --background-color: #fbfbfb;
     --board-width: 22rem;
-}
-
-@media (prefers-color-scheme: dark) {
-    :root {}
+    --board-height: 30rem;
+    --nav-width: 20rem;
 }
 
 * {
@@ -52,6 +50,13 @@ body {
 header {
     grid-area: header;
     display: none;
+    justify-content: space-between;
+    align-items: center;
+    width: 100vw;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
 }
 
 nav {
@@ -59,16 +64,16 @@ nav {
     color: #fff;
     padding: 3rem;
     position: fixed;
-    width: 20rem;
+    width: var(--nav-width);
     height: 100vh;
 
     background-image:
         radial-gradient(ellipse farthest-corner at 10px 10px, #373737, #373737 50%, transparent 50%),
         linear-gradient(-30deg, #3a3a3a, #303030);
     background-size:
-    10px 10px,
-    auto;
-
+        10px 10px,
+        auto;
+    transition: 0.2s;
 }
 
 main {
@@ -80,10 +85,7 @@ main {
     margin: 0 auto;
     width: 50rem;
     padding: 2rem 0;
-}
-
-main>section {
-    margin-bottom: 4rem;
+    gap: 4rem;
 }
 
 footer {
@@ -110,8 +112,24 @@ a {
     box-shadow: 0 0 1rem -0.1rem rgba(0, 0, 0, 0.5);
 }
 
-@media (prefers-color-scheme: dark) {
-    html {
-        color-scheme: dark;
+@media (max-width: 1200px) {
+    body {
+        display: flex;
+        flex-direction: column;
+    }
+
+    header {
+        display: flex;
+        flex-direction: row-reverse;
+    }
+
+    nav {
+        left: -20rem;
+        z-index: 20;
+    }
+
+    main {
+        width: auto;
+        gap: 2rem;
     }
 }

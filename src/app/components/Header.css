@@ -1,0 +1,10 @@
+header>button {
+    width: 3rem;
+    height: 3rem;
+    font-size: 2rem;
+    background-color: transparent;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

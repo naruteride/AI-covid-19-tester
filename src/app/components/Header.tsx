@@ -1,4 +1,5 @@
-// 'use client'
+import "./Header.css"
+
 export default function Header(): React.ReactElement {
 
     return <>

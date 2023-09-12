@@ -3,17 +3,24 @@
 .uploader>h1 {
     margin-bottom: 0.2rem;
 }
+.uploader>h1,
+.uploader>p {
+    padding: 0 3rem;
+}
 
 .inspection {
     width: 100%;
-    height: 30rem;
     display: flex;
     align-items: stretch;
+    position: relative;
+    margin-bottom: 3rem;
+    row-gap: 3rem;
 }
 
 .board {
     position: relative;
     width: var(--board-width);
+    height: var(--board-height);
     padding: 3rem;
     background:
         linear-gradient(30deg, transparent 45%, #272727 0, #272727 55%, transparent 0),
@@ -28,6 +35,10 @@
     box-shadow: 0 0.1rem 1rem -0.1rem rgba(0, 0, 0, 0.2);
     transition: 0.2s;
     cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
 }
 
 .board:hover {
@@ -51,9 +62,12 @@
     background-repeat: no-repeat;
 }
 
-.inputFileContainer {
+/* .inputFileContainer {
     width: var(--board-width);
-}
+    position: absolute;
+    bottom: -3rem;
+    left: 0;
+} */
 
 .inputFile {
     width: 12rem;
@@ -61,6 +75,8 @@
     padding: 1rem 0 1rem 0;
     cursor: pointer;
     display: block;
+    position: absolute;
+    bottom: -3rem;
 }
 
 .resultSheet {
@@ -70,4 +86,19 @@
     flex-direction: column;
     justify-content: space-evenly;
     position: relative;
+}
+
+@media (max-width: 1200px) {
+    .inspection{
+        flex-direction: column;
+        margin-bottom: 0;
+    }
+
+    .dashboard {
+        padding: 3rem;
+    }
+    
+    .chart {
+        margin: auto -3rem;
+    }
 }
