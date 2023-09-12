@@ -93,7 +93,7 @@ export default function Sign({ params }: { params: { id: string } }): React.Reac
 
     return <>
         <main>
-            <section>
+            <section id='sign' className={styles.sign}>
                 <h1>{submitText}</h1>
                 <br /><br />
                 <form onSubmit={handleSubmit} className={styles.form}>

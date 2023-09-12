@@ -64,3 +64,9 @@
     transform: scale(1.02);
     box-shadow: 0 0.1rem 0.6rem -0.09rem rgba(0, 0, 0, 0.5);
 }
+
+@media (max-width: 1200px) {
+    .sign {
+        padding: 0 3rem;
+    }
+}
