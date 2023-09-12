@@ -73,6 +73,13 @@ nav {
 
 main {
     grid-area: main;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: stretch;
+    margin: 0 auto;
+    width: 50rem;
+    padding: 2rem 0;
 }
 
 main>section {
