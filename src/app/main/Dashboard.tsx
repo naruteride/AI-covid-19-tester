@@ -1,13 +1,18 @@
 'use client';
-import { CartesianGrid, Line, LineChart, Tooltip, XAxis, YAxis } from "recharts"
-import { getDashboardData } from "../components/Firebase"
-import { useRecoilValue } from "recoil"
-import { userState } from "../components/Auth"
+// 파이어베이스
 import { User } from "firebase/auth";
+// 리코일
+import { useRecoilValue } from "recoil";
+// 리액트
 import { useEffect, useRef, useState } from "react";
+// 리차트
+import { CartesianGrid, Line, LineChart, Tooltip, XAxis, YAxis } from "recharts";
+// 로컬
+import { getDashboardData } from "../components/Firebase";
+import { userState } from "@/app/components/Auth";
 import { resultState } from "./Uploader";
-import styles from "./page.module.css"
 import Loading from "../components/Loading";
+import styles from "./page.module.css";
 
 export default function Dashboard() {
     const user = useRecoilValue<User | null>(userState);

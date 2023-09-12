@@ -1,7 +1,7 @@
 // 넥스트
 import type { Metadata } from 'next';
 import { Noto_Sans_KR } from 'next/font/google';
-// 로컬 컴포넌트
+// 로컬
 import './globals.css';
 import RecoilRootContainer from './RecoilRootContainer';
 

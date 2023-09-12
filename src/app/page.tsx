@@ -1,8 +1,8 @@
-// 'use client'
-import styles from '@/app/main/page.module.css';
+// 로컬
 import Uploader from '@/app/main/Uploader';
-import Footer from '@/app/components/Footer';
 import Dashboard from './main/Dashboard';
+import Footer from '@/app/components/Footer';
+import styles from '@/app/main/page.module.css';
 
 export default function Main() {
     return (

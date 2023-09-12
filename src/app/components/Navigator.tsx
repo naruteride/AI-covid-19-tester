@@ -1,8 +1,10 @@
-// 'use client'
+// 넥스트
 import Link from 'next/link';
-import "./Navigator.css";
+// 리코일
 import { atom, useRecoilState, useRecoilValue } from 'recoil';
+// 로컬
 import { userState } from '@/app/components/Auth';
+import "./Navigator.css";
 
 export const navigatorActivate = atom<boolean>({
     key: 'navigatorActivate',

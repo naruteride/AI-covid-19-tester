@@ -1,9 +1,11 @@
-// 'use client'
-import { Dispatch, SetStateAction } from 'react';
-import styles from './page.module.css';
-import { resultState } from './Uploader';
+// 리코일
 import { useRecoilValue } from 'recoil';
+// 리액트
+import { Dispatch, SetStateAction } from 'react';
+// 로컬
+import { resultState } from './Uploader';
 import Loading from '@/app/components/Loading';
+import styles from './page.module.css';
 
 // 검사 결과 시트
 export default function ResultSheet({ loading, setLoading }: { loading: boolean, setLoading: Dispatch<SetStateAction<boolean>> }) {

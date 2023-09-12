@@ -1,14 +1,18 @@
 'use client'
-import { atom, useRecoilState, useRecoilValue } from 'recoil';
-import styles from './page.module.css';
-import React, { useEffect, useRef, useState } from 'react';
-import "@/app/components/cssprogress.css";
-import ResultSheet from './ResultSheet';
-import { updateImageDisplay } from '@/app/components/Tensorflow';
-import { uploadResultData } from '../components/Firebase';
-import { userState } from '../components/Auth';
+// 파이어베이스
 import { User } from 'firebase/auth';
-import { enqueueSnackbar } from 'notistack'
+// 리코일
+import { atom, useRecoilState, useRecoilValue } from 'recoil';
+// 리액트
+import React, { useEffect, useRef, useState } from 'react';
+// 로컬
+import { enqueueSnackbar } from 'notistack';
+import { uploadResultData } from '@/app/components/Firebase';
+import { updateImageDisplay } from '@/app/components/Tensorflow';
+import { userState } from '@/app/components/Auth';
+import ResultSheet from './ResultSheet';
+import "@/app/components/cssprogress.css";
+import styles from './page.module.css';
 
 export type ResultStateType = {
     '건강함': number;
@@ -89,9 +93,6 @@ export default function Uploader(): React.ReactElement {
                     <input onChange={handleImageChange} className={styles.inputFile} type="file" id="image" name="image" accept="image/png, image/jpeg"></input>
                 </label>
 
-                {/* <div className={styles.inputFileContainer}>
-                    <input onChange={handleImageChange} className={styles.inputFile} type="file" id="image" name="image" accept="image/png, image/jpeg"></input>
-                </div> */}
                 <ResultSheet loading={loading} setLoading={setLoading} />    {/* 검사 결과 시트 */}
             </div>
 

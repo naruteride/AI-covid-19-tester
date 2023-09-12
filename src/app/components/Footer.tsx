@@ -1,4 +1,4 @@
-// 'use client'
+// 로컬
 import '@/app/components/Footer.css';
 
 export default function Footer(): React.ReactElement {
