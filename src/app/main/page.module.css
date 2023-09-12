@@ -3,10 +3,6 @@
 .uploader>h1 {
     margin-bottom: 0.2rem;
 }
-.uploader>h1,
-.uploader>p {
-    padding: 0 3rem;
-}
 
 .inspection {
     width: 100%;
@@ -86,7 +82,13 @@
 }
 
 @media (max-width: 1200px) {
-    .inspection{
+
+    .uploader>h1,
+    .uploader>p {
+        padding: 0 3rem;
+    }
+
+    .inspection {
         flex-direction: column;
         margin-bottom: 0;
     }
@@ -98,7 +100,7 @@
     .resultSheet>h3 {
         margin-bottom: 2rem;
     }
-    
+
     .chart {
         margin: auto -3rem;
     }
