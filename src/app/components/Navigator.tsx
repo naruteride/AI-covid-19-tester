@@ -21,11 +21,11 @@ export default function Navigator(): React.ReactElement {
                 네비게이터
             </h3>
             <ul>
-                <NavItem href='/#uploader' name='AI 코로나 측정기' />
-                <NavItem href='/#dashboard' name='대시보드' />
                 {
                     (user)
                         ? <>
+                            <NavItem href='/#uploader' name='AI 코로나 측정기' />
+                            <NavItem href='/#dashboard' name='대시보드' />
                             <NavItem href='/sign/out' name='로그아웃' />
                         </>
                         : <>

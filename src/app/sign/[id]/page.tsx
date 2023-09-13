@@ -4,7 +4,8 @@ import {
     getAuth,
     signInWithEmailAndPassword,
     createUserWithEmailAndPassword,
-    signOut
+    signOut,
+    AuthError
 } from 'firebase/auth';
 // 넥스트
 import { useRouter } from 'next/navigation';
@@ -82,8 +83,28 @@ export default function Sign({ params }: { params: { id: string } }): React.Reac
                     Router.replace(`/`);
                 }
             } catch (error) {
-                console.error('Sign 에러 발생:', error);
-                enqueueSnackbar('로그인 에러 발생!', { variant: 'error' });
+                const firebaseError = error as AuthError;
+                switch (firebaseError.code) {
+                    case 'auth/user-not-found':
+                        enqueueSnackbar('이메일을 다시 입력해주세요.', { variant: 'error' });
+                        break;
+                    case 'auth/wrong-password':
+                        enqueueSnackbar('비밀번호를 다시 입력해주세요.', { variant: 'error' });
+                        break;
+                    case 'auth/email-already-in-use':
+                        enqueueSnackbar('이미 사용 중인 이메일입니다.', { variant: 'error' });
+                        break;
+                    case 'auth/weak-password':
+                        enqueueSnackbar('비밀번호가 너무 쉽습니다!', { variant: 'error' });
+                        break;
+                    case 'auth/claims-too-large':
+                        enqueueSnackbar('이메일 혹은 비밀번호가 너무 깁니다.', { variant: 'error' });
+                        break;
+                    default:
+                        enqueueSnackbar('알 수 없는 로그인 오류가 발생했습니다!', { variant: 'error' });
+                        console.log('Sign 에러 발생:', JSON.stringify(firebaseError));
+                        break;
+                }
             }
         } else {
             enqueueSnackbar('이메일 혹은 비밀번호를 입력해주세요.', { variant: 'error' });
