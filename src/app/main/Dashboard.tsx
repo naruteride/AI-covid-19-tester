@@ -2,22 +2,22 @@
 // 파이어베이스
 import { User } from "firebase/auth";
 // 리코일
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 // 리액트
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 // 리차트
 import { CartesianGrid, Line, LineChart, Tooltip, XAxis, YAxis } from "recharts";
 // 로컬
 import { getDashboardData } from "../components/Firebase";
 import { userState } from "@/app/components/Auth";
-import { resultState } from "./Uploader";
-import Loading from "../components/Loading";
+import { resultState, uploadingToDBState } from "./Uploader";
 import styles from "./page.module.css";
 
 export default function Dashboard() {
     const user = useRecoilValue<User | null>(userState);
     const result = useRecoilValue(resultState)
     const [dashboardData, setDashboardData] = useState<{ name: string; }[]>([{ name: "" }]);
+    const [uploadingToDB, setUploadingToDB] = useRecoilState(uploadingToDBState);
 
     async function fetchData() {
         if (user == null) {
@@ -31,8 +31,10 @@ export default function Dashboard() {
     }
 
     useEffect(() => {
-        fetchData();
-    }, [user, result]);
+        if (uploadingToDB == false) {
+            fetchData();
+        }
+    }, [uploadingToDB, result, user]);
 
     return <>
         <section id="dashboard" className={styles.dashboard}>
@@ -40,11 +42,6 @@ export default function Dashboard() {
             <p>과거의 진단 기록과 변화 추이를 확인합니다.</p>
             <br /><br />
             <LineChartContainer dashboardData={dashboardData} />
-            {/* {
-                (windowWidth)
-                    ? <LineChartContainer dashboardData={dashboardData} windowWidth={windowWidth} />
-                    : <Loading />
-            } */}
         </section>
     </>
 }

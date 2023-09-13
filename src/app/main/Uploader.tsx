@@ -2,7 +2,7 @@
 // 파이어베이스
 import { User } from 'firebase/auth';
 // 리코일
-import { atom, useRecoilState, useRecoilValue } from 'recoil';
+import { atom, useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 // 리액트
 import React, { useEffect, useRef, useState } from 'react';
 // 로컬
@@ -37,17 +37,25 @@ export const resultState = atom<ResultStateType>({
     dangerouslyAllowMutability: true,
 });
 
+
+export const uploadingToDBState = atom<boolean>({
+    key: "uploading",
+    default: false,
+    dangerouslyAllowMutability: true,
+});
+
 // 사진를 올리고, 검사 결과 받는 컴포넌트
 export default function Uploader(): React.ReactElement {
     const [result, setResult] = useRecoilState(resultState);
     const board = useRef(null);
-    const [loading, setLoading] = useState(false);
+    const [uploadingToDB, setUploadingToDB] = useRecoilState(uploadingToDBState);
     const user: User | null = useRecoilValue(userState);
 
     // 검사 보드에 사진가 변경되면 작동
     const handleImageChange = async (event: { target: HTMLInputElement; }) => {
         // 로딩 시작
-        setLoading(true);
+        setUploadingToDB(true)
+
         enqueueSnackbar('엑스레이 사진 검사 중...');
 
         // 검사 보드에 사진 업로드 및 모델에 사진 전송
@@ -68,8 +76,7 @@ export default function Uploader(): React.ReactElement {
 
         async function fetchData() {
             // 검사 결과를 DB에 저장
-            await uploadResultData(user, result);
-            setLoading(false);  // 로딩 끝
+            await uploadResultData(user, result, setUploadingToDB);
             enqueueSnackbar('검사 완료!', { variant: 'success' });
         }
 
@@ -93,7 +100,7 @@ export default function Uploader(): React.ReactElement {
                     <input onChange={handleImageChange} className={styles.inputFile} type="file" id="image" name="image" accept="image/png, image/jpeg"></input>
                 </label>
 
-                <ResultSheet loading={loading} setLoading={setLoading} />    {/* 검사 결과 시트 */}
+                <ResultSheet loading={uploadingToDB} setLoading={setUploadingToDB} />    {/* 검사 결과 시트 */}
             </div>
 
 

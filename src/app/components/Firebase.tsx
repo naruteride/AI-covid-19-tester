@@ -2,8 +2,8 @@
 import { initializeApp } from "firebase/app";
 import { Firestore } from "@firebase/firestore/lite";
 import { getFirestore, collection, getDocs, setDoc, doc, Timestamp, query, where, addDoc, orderBy, limit, QueryDocumentSnapshot, DocumentData } from 'firebase/firestore/lite';
-import { useRecoilState, useRecoilValue } from "recoil";
-import { ResultStateType, resultState } from "../main/Uploader";
+import { atom, useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { ResultStateType, resultState, uploadingToDBState } from "../main/Uploader";
 import { userState } from "./Auth";
 import { User } from "firebase/auth";
 
@@ -21,11 +21,11 @@ export default app;
 const db = getFirestore(app);
 
 
-
 // 결과를 DB에 저장함
-export async function uploadResultData(user: User | null, result: ResultStateType) {
+export async function uploadResultData(user: User | null, result: ResultStateType, setUploadingToDB: { (valOrUpdater: boolean | ((currVal: boolean) => boolean)): void; (arg0: boolean): void; }) {
     const formetedDate = formatDate(new Date())
     const [todayStartTimestamp, todayEndTimestamp] = getStartEndTimestamp(formetedDate);
+
     if (user === null) {
         // 로그인 안 했으면 바로 리턴
         return;
@@ -61,7 +61,7 @@ export async function uploadResultData(user: User | null, result: ResultStateTyp
             'bacterial pneumonia': result["박테리아성 폐렴"]
         });
     }
-
+    setUploadingToDB(false)
 };
 
 // 대시보드에 필요한 데이터를 반환함
@@ -73,7 +73,6 @@ export async function getDashboardData(user: User | null) {
 
     const DashboardData = [];
     const userDocs = await getUserDocs(user);
-    // const [firstDate, lastDate] = await getFirstAndLastDate(userDocs);
 
     if (userDocs) {
         for (let doc of userDocs) {
