@@ -1,11 +1,22 @@
-// 'use client'
+// 파이어베이스
 import { initializeApp } from "firebase/app";
-import { Firestore } from "@firebase/firestore/lite";
-import { getFirestore, collection, getDocs, setDoc, doc, Timestamp, query, where, addDoc, orderBy, limit, QueryDocumentSnapshot, DocumentData } from 'firebase/firestore/lite';
-import { atom, useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { ResultStateType, resultState, uploadingToDBState } from "../main/Uploader";
-import { userState } from "./Auth";
 import { User } from "firebase/auth";
+import {
+    getFirestore,
+    collection,
+    getDocs,
+    setDoc,
+    doc,
+    Timestamp,
+    query,
+    where,
+    addDoc,
+    orderBy,
+    QueryDocumentSnapshot,
+    DocumentData
+} from 'firebase/firestore/lite';
+// 로컬
+import { ResultStateType } from "../main/Uploader";
 
 const firebaseConfig = {
     apiKey: "AIzaSyBo_Y2kS9xkDcia9HdsnqFvAOJwM0Nvzms",
@@ -14,7 +25,7 @@ const firebaseConfig = {
     storageBucket: "ai-covid-19-tester.appspot.com",
     messagingSenderId: "460362710464",
     appId: "1:460362710464:web:40478bf87274f2ef93dc25"
-  };
+};
 
 const app = initializeApp(firebaseConfig);
 export default app;
