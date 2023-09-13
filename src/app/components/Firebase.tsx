@@ -8,13 +8,13 @@ import { userState } from "./Auth";
 import { User } from "firebase/auth";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyC_K--t3XLntBTN_NWsR7rhIf_B2Fec5Fk",
-    authDomain: "ai-covid-19-21657.firebaseapp.com",
-    projectId: "ai-covid-19-21657",
-    storageBucket: "ai-covid-19-21657.appspot.com",
-    messagingSenderId: "402886386383",
-    appId: "1:402886386383:web:3857ce748855a0ea48cdba"
-};
+    apiKey: "AIzaSyBo_Y2kS9xkDcia9HdsnqFvAOJwM0Nvzms",
+    authDomain: "ai-covid-19-tester.firebaseapp.com",
+    projectId: "ai-covid-19-tester",
+    storageBucket: "ai-covid-19-tester.appspot.com",
+    messagingSenderId: "460362710464",
+    appId: "1:460362710464:web:40478bf87274f2ef93dc25"
+  };
 
 const app = initializeApp(firebaseConfig);
 export default app;

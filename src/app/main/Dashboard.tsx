@@ -19,6 +19,7 @@ export default function Dashboard() {
     const result = useRecoilValue(resultState)
     const [dashboardData, setDashboardData] = useState<{ name: string; }[]>([{ name: "" }]);
     const [waitForAwait, setWaitForAwait] = useState(false);
+    const [keyCount, setKeyCount] = useState(0)
     const [windowWidth, setWindowWidth] = useState(0);
     useEffect(() => {
         setWindowWidth(window.innerWidth);
@@ -40,7 +41,14 @@ export default function Dashboard() {
     useEffect(() => {
         setWaitForAwait(true);
         fetchData();
-    }, [user, result, waitForAwait]);
+    }, [user, result]);
+
+    // fetchData가 끝났을 때 강제로 LineChart를 새로 그림
+    useEffect(() => {
+        if (waitForAwait === false) {
+            setKeyCount(keyCount + 1);
+        }
+    }, [waitForAwait])
 
     return <>
         <section id="dashboard" className={styles.dashboard}>
@@ -54,6 +62,7 @@ export default function Dashboard() {
                     data={dashboardData}
                     margin={{ top: 5, right: 60, bottom: 5, left: 0 }}
                     className={styles.chart}
+                    key={keyCount}
                 >
                     <Line type="monotone" key={'건강함'} dataKey={'건강함'} stroke={'#3798d9'} />
                     <Line type="monotone" key={'코로나-19'} dataKey={'코로나-19'} stroke={'#ef5350'} />
