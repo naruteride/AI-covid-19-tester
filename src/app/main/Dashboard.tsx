@@ -43,7 +43,7 @@ export default function Dashboard() {
         fetchData();
     }, [user, result]);
 
-    // fetchData가 끝났을 때 강제로 LineChart를 새로 그림
+    // fetchData가 끝났을 때 전체 대시보드 섹션을 새로 그림
     useEffect(() => {
         if (waitForAwait === false) {
             setKeyCount(keyCount + 1);
@@ -51,7 +51,7 @@ export default function Dashboard() {
     }, [waitForAwait])
 
     return <>
-        <section id="dashboard" className={styles.dashboard}>
+        <section id="dashboard" className={styles.dashboard} key={keyCount}>
             <h1>대시보드</h1>
             <p>과거의 진단 기록과 변화 추이를 확인합니다.</p>
             <br /><br />
@@ -62,7 +62,6 @@ export default function Dashboard() {
                     data={dashboardData}
                     margin={{ top: 5, right: 60, bottom: 5, left: 0 }}
                     className={styles.chart}
-                    key={keyCount}
                 >
                     <Line type="monotone" key={'건강함'} dataKey={'건강함'} stroke={'#3798d9'} />
                     <Line type="monotone" key={'코로나-19'} dataKey={'코로나-19'} stroke={'#ef5350'} />
