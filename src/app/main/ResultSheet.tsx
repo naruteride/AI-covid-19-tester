@@ -10,17 +10,17 @@ import styles from './page.module.css';
 // 검사 결과 시트
 export default function ResultSheet({ loading, setLoading }: { loading: boolean, setLoading: Dispatch<SetStateAction<boolean>> }) {
     const resultSheet = useRecoilValue(resultState);
-    const ProgressBars = [];
+    const progressBars = [];
 
     for (let result in resultSheet) {
-        ProgressBars.push(<ProgressBar type={result} value={resultSheet[result]} />)
+        progressBars.push(<ProgressBar key={result} type={result} value={resultSheet[result]} />)
     }
 
     return <>
         <div className={styles.resultSheet}>
             <h3>검사 결과</h3>
             {loading ? <Loading /> : ''}
-            {ProgressBars}
+            {progressBars}
         </div>
     </>
 }
