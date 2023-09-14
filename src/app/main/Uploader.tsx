@@ -9,7 +9,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { enqueueSnackbar } from 'notistack';
 import { uploadResultData } from '@/app/components/Firebase';
 import { updateImageDisplay } from '@/app/components/Tensorflow';
-import { userState } from '@/app/components/Auth';
+import { userState } from '@/app/components/AuthProvider';
 import ResultSheet from './ResultSheet';
 import "@/app/components/cssprogress.css";
 import styles from './page.module.css';

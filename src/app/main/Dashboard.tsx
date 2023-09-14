@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import { CartesianGrid, Line, LineChart, Tooltip, XAxis, YAxis } from "recharts";
 // 로컬
 import { getDashboardData } from "../components/Firebase";
-import { userState } from "@/app/components/Auth";
+import { userState } from "@/app/components/AuthProvider";
 import { resultState, uploadingToDBState } from "./Uploader";
 import styles from "./page.module.css";
 
