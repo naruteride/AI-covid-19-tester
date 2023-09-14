@@ -3,7 +3,7 @@ import Link from 'next/link';
 // 리코일
 import { atom, useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 // 로컬
-import { userState } from '@/app/components/Auth';
+import { userState } from '@/app/components/AuthProvider';
 import "./Navigator.css";
 
 export const navigatorActivate = atom<boolean>({

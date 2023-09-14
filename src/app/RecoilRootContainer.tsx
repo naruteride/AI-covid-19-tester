@@ -6,7 +6,7 @@ import { RecoilRoot } from "recoil";
 // 스낵바
 import { SnackbarProvider } from 'notistack';
 // 로컬
-import Auth from '@/app/components/Auth';
+import AuthProvider from '@/app/components/AuthProvider';
 import Header from '@/app/components/Header';
 import Navigator from '@/app/components/Navigator';
 import './globals.css';
@@ -20,10 +20,11 @@ export default function RecoilRootContainer({ children }: { children: React.Reac
             }}
         >
             <RecoilRoot>
-                <Auth />
-                <Header />
-                <Navigator />
-                {children}
+                <AuthProvider>
+                    <Header />
+                    <Navigator />
+                    {children}
+                </AuthProvider>
             </RecoilRoot>
         </SnackbarProvider>
     </>
