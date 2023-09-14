@@ -13,7 +13,7 @@ export default function ResultSheet({ loading, setLoading }: { loading: boolean,
     const progressBars = [];
 
     for (let result in resultSheet) {
-        progressBars.push(<ProgressBar type={result} value={resultSheet[result]} />)
+        progressBars.push(<ProgressBar key={result} type={result} value={resultSheet[result]} />)
     }
 
     return <>
