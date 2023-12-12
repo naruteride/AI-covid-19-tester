@@ -20,9 +20,9 @@ export default function RecoilRootContainer({ children }: { children: React.Reac
             }}
         >
             <RecoilRoot>
+                <Header />
+                <Navigator />
                 <AuthProvider>
-                    <Header />
-                    <Navigator />
                     {children}
                 </AuthProvider>
             </RecoilRoot>
